@@ -246,9 +246,9 @@ const DEMO_PRODUCTS = [
     name: 'Banarasi Silk Saree with Gold Zari',
     type: 'Pure Silk', region: 'Varanasi, UP',
     price: '₹28,500', priceOriginal: '₹32,000', priceNumeric: 28500,
-    category: 'silk', image: 'images/product_banarasi.png',
+    category: 'silk', image: 'assets/images/product_banarasi.png',
     imageAlt: 'Banarasi Silk Saree', featured: true, rating: 4.9, reviews: 142,
-    images: ['images/product_banarasi.png', 'images/hero_saree_model.png', 'images/product_kanjivaram.png'],
+    images: ['assets/images/product_banarasi.png', 'assets/images/hero_saree_model.png', 'assets/images/product_kanjivaram.png'],
     description: 'An heirloom Banarasi pure silk saree featuring intricate Kadwa weave gold zari florals across the body and a regal pallu. Woven by master artisans in Varanasi, this timeless weave embodies opulence and heritage elegance.'
   },
   {
@@ -256,9 +256,9 @@ const DEMO_PRODUCTS = [
     name: 'Kanjivaram Silk Saree Magenta Mustard Border',
     type: 'Pure Silk', region: 'Kanchipuram, TN',
     price: '₹34,000', priceOriginal: '₹38,500', priceNumeric: 34000,
-    category: 'silk', image: 'images/product_kanjivaram.png',
+    category: 'silk', image: 'assets/images/product_kanjivaram.png',
     imageAlt: 'Kanjivaram Silk Saree', featured: true, rating: 5.0, reviews: 89,
-    images: ['images/product_kanjivaram.png', 'images/hero_saree_model.png'],
+    images: ['assets/images/product_kanjivaram.png', 'assets/images/hero_saree_model.png'],
     description: 'A traditional Kanchipuram pure mulberry silk saree characterized by its distinctive Korvai weave contrasting mustard yellow border against a jewel-toned magenta body. Renowned for its durability and rich luster.'
   },
   {
@@ -266,9 +266,9 @@ const DEMO_PRODUCTS = [
     name: 'Chanderi Silk Saree Pink Lotus Floral Pattern',
     type: 'Silk Cotton', region: 'Chanderi, MP',
     price: '₹14,500', priceOriginal: null, priceNumeric: 14500,
-    category: 'silk', image: 'images/product_chanderi.png',
+    category: 'silk', image: 'assets/images/product_chanderi.png',
     imageAlt: 'Chanderi Silk Saree', featured: true, rating: 4.8, reviews: 217,
-    images: ['images/product_chanderi.png'],
+    images: ['assets/images/product_chanderi.png'],
     description: 'Feather-light Chanderi silk cotton weave originating from Madhya Pradesh, adorned with delicate gold zari lotus motifs (buttis) and a sheer, luxurious drape perfect for celebrations and festive gatherings.'
   },
   {
@@ -276,9 +276,9 @@ const DEMO_PRODUCTS = [
     name: 'Tussar Handloom Saree Natural Ivory Terracotta',
     type: 'Handloom Silk', region: 'Bhagalpur, Bihar',
     price: '₹9,800', priceOriginal: '₹12,000', priceNumeric: 9800,
-    category: 'handloom', image: 'images/product_tussar.png',
+    category: 'handloom', image: 'assets/images/product_tussar.png',
     imageAlt: 'Tussar Handloom Saree', featured: true, rating: 4.7, reviews: 63,
-    images: ['images/product_tussar.png'],
+    images: ['assets/images/product_tussar.png'],
     description: 'Authentic Bhagalpuri Tussar wild silk saree showcasing a natural textured ivory weave complemented by organic terracotta borders and traditional tribal-inspired block prints.'
   },
   {
@@ -286,9 +286,9 @@ const DEMO_PRODUCTS = [
     name: 'Patola Silk Saree Royal Blue Crimson Double Ikat',
     type: 'Double Ikat', region: 'Patan, Gujarat',
     price: '₹55,000', priceOriginal: '₹62,000', priceNumeric: 55000,
-    category: 'ikat', image: 'images/product_patola.png',
+    category: 'ikat', image: 'assets/images/product_patola.png',
     imageAlt: 'Patola Silk Saree', featured: true, rating: 5.0, reviews: 38,
-    images: ['images/product_patola.png', 'images/product_pochampally.png'],
+    images: ['assets/images/product_patola.png', 'assets/images/product_pochampally.png'],
     description: 'A masterpiece of precision weaving, this Patan Double Ikat Patola silk saree features intricate geometric jewel-box patterns where both warp and weft threads are resist-dyed prior to weaving.'
   },
   {
@@ -296,9 +296,9 @@ const DEMO_PRODUCTS = [
     name: 'Pochampally Ikat Silk Saree Teal Purple Geometric',
     type: 'Ikat Silk', region: 'Pochampally, Telangana',
     price: '₹18,500', priceOriginal: '₹22,000', priceNumeric: 18500,
-    category: 'ikat', image: 'images/product_pochampally.png',
+    category: 'ikat', image: 'assets/images/product_pochampally.png',
     imageAlt: 'Pochampally Ikat Saree', featured: true, rating: 4.9, reviews: 104,
-    images: ['images/product_pochampally.png'],
+    images: ['assets/images/product_pochampally.png'],
     description: 'Vibrant Pochampally silk saree crafted in Telangana using traditional single-ikat tie-dye techniques. Features striking geometric diamond patterns in rich teal and royal purple.'
   },
   {

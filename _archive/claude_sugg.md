@@ -1,0 +1,7 @@
+Add a "Why Trust Us" or "Our Weavers" section on the home page with real names, real regions, and ideally photos/short videos of the actual artisans or looms — even 3–4 genuine profiles beat generic heritage language.
+Surface a price range early (e.g., "Sarees from ₹4,500 to ₹45,000") so visitors can self-qualify instead of hunting through the catalog.
+Add visible trust markers near the CTA buttons: return/exchange policy in one line, shipping timeline, "100% handwoven, certificate of authenticity included" if true — anything concrete beats "crafted with soul."
+Add a testimonials/reviews section, even 3–5 quotes with first names and cities — social proof is currently completely absent from the site.
+Make the "Return Policy" footer link actually functional, and make sure it's genuinely visible before checkout, not just in the footer.
+Consider adding size/blouse-piece/fall-and-pico details as standard product info, since that's a common pre-purchase question for sarees and currently isn't addressed anywhere in the copy.
+On the demo-fallback state (README mentions Shopify can silently fail to demo products) — make sure demo products are never confusable with real inventory; a customer inquiring about a "demo" saree that doesn't actually exist would be a serious trust breach.

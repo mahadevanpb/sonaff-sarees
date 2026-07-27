@@ -1,0 +1,312 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 400" fill="none">
+  <defs>
+    <!-- Gold gradient for botanical elements -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4A017"/>
+      <stop offset="50%" stop-color="#E8C84A"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+    <!-- Saree crimson gradient -->
+    <linearGradient id="sareeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B0D20"/>
+      <stop offset="100%" stop-color="#6B0A18"/>
+    </linearGradient>
+    <!-- Hair gradient -->
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1A0A00"/>
+      <stop offset="100%" stop-color="#2D1A0A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ══════════════════════════════════════
+       BOTANICAL FRAME — dot arc at top
+  ════════════════════════════════════════ -->
+  <!-- Dot arc top-left -->
+  <circle cx="148" cy="57" r="3.5" fill="#D4A017" opacity="0.7"/>
+  <circle cx="135" cy="63" r="2.8" fill="#D4A017" opacity="0.55"/>
+  <circle cx="124" cy="72" r="2.2" fill="#D4A017" opacity="0.4"/>
+
+  <!-- Dot arc top-right -->
+  <circle cx="212" cy="57" r="3.5" fill="#D4A017" opacity="0.7"/>
+  <circle cx="225" cy="63" r="2.8" fill="#D4A017" opacity="0.55"/>
+  <circle cx="236" cy="72" r="2.2" fill="#D4A017" opacity="0.4"/>
+
+  <!-- ══════════════════════════════════════
+       LEFT BOTANICAL BRANCH
+  ════════════════════════════════════════ -->
+  <!-- Main left stem -->
+  <path d="M 118 220 C 100 200 88 175 90 145 C 92 120 105 100 118 88" 
+        stroke="url(#goldGrad)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+
+  <!-- Left leaves -->
+  <!-- Large lower-left leaf -->
+  <path d="M 100 218 C 72 200 58 170 68 148 C 70 144 75 142 80 145 C 95 155 103 185 100 218 Z"
+        fill="#8B0D20" opacity="0.85"/>
+  <!-- Left leaf gold outline accent -->
+  <path d="M 100 218 C 72 200 58 170 68 148" stroke="#D4A017" stroke-width="1.2" fill="none" opacity="0.6"/>
+
+  <!-- Upper-left botanical leaf 1 -->
+  <path d="M 98 168 C 75 158 62 138 70 120 C 71 117 75 116 78 118 C 92 128 100 150 98 168 Z"
+        fill="url(#goldGrad)" opacity="0.9"/>
+  <!-- Upper-left leaf 2 -->
+  <path d="M 92 140 C 72 128 65 108 76 95 C 78 92 82 92 84 95 C 94 108 96 128 92 140 Z"
+        fill="url(#goldGrad)" opacity="0.8"/>
+  <!-- Upper-left leaf 3 -->
+  <path d="M 102 116 C 88 103 87 85 98 76 C 100 74 104 75 105 78 C 110 90 110 106 102 116 Z"
+        fill="url(#goldGrad)" opacity="0.75"/>
+
+  <!-- Left spiral scroll lower -->
+  <path d="M 96 230 C 80 235 68 228 64 215 C 60 202 66 190 78 188" 
+        stroke="#D4A017" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M 78 188 C 86 186 90 192 86 198 C 82 204 76 202 74 197" 
+        stroke="#D4A017" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Scroll dot -->
+  <circle cx="75" cy="235" r="3" fill="#D4A017" opacity="0.7"/>
+  <circle cx="85" cy="245" r="2" fill="#D4A017" opacity="0.5"/>
+  <circle cx="68" cy="210" r="2.5" fill="#D4A017" opacity="0.6"/>
+
+  <!-- ══════════════════════════════════════
+       RIGHT BOTANICAL BRANCH
+  ════════════════════════════════════════ -->
+  <!-- Main right stem -->
+  <path d="M 242 220 C 260 200 272 175 270 145 C 268 120 255 100 242 88" 
+        stroke="url(#goldGrad)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+
+  <!-- Right large leaf -->
+  <path d="M 255 210 C 278 190 292 160 284 138 C 282 134 277 133 273 136 C 258 148 252 180 255 210 Z"
+        fill="url(#goldGrad)" opacity="0.9"/>
+  <!-- Right leaf 2 -->
+  <path d="M 262 175 C 282 162 290 140 280 125 C 278 122 274 121 272 124 C 262 136 258 158 262 175 Z"
+        fill="url(#goldGrad)" opacity="0.8"/>
+  <!-- Right leaf 3 -->
+  <path d="M 256 143 C 270 128 272 108 262 98 C 260 96 256 96 254 99 C 248 110 248 130 256 143 Z"
+        fill="url(#goldGrad)" opacity="0.75"/>
+  <!-- Right leaf top -->
+  <path d="M 249 116 C 258 100 256 82 246 75 C 244 73 240 74 240 77 C 238 90 240 106 249 116 Z"
+        fill="url(#goldGrad)" opacity="0.7"/>
+
+  <!-- Right scroll -->
+  <path d="M 261 228 C 276 233 286 225 288 212 C 290 199 284 188 273 187" 
+        stroke="#D4A017" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M 273 187 C 265 185 262 191 266 197 C 270 203 276 200 277 195" 
+        stroke="#D4A017" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <circle cx="281" cy="232" r="3" fill="#D4A017" opacity="0.7"/>
+  <circle cx="272" cy="243" r="2" fill="#D4A017" opacity="0.5"/>
+  <circle cx="290" cy="208" r="2.5" fill="#D4A017" opacity="0.6"/>
+
+  <!-- ══════════════════════════════════════
+       WOMAN SILHOUETTE — HAIR
+  ════════════════════════════════════════ -->
+  <!-- Hair flowing — main mass -->
+  <path d="M 166 62 
+           C 155 58 145 62 140 70 
+           C 134 80 136 94 140 104
+           C 144 115 150 124 152 136
+           C 154 148 152 162 148 175
+           C 145 188 140 200 138 212
+           C 136 224 137 236 140 245
+           L 155 240
+           C 152 228 152 216 155 204
+           C 158 192 163 180 165 168
+           C 167 155 167 142 166 130
+           C 165 118 162 108 162 96
+           C 162 84 165 72 166 62 Z"
+        fill="url(#hairGrad)"/>
+
+  <!-- ══════════════════════════════════════
+       HEAD / FACE (profile, facing left)
+  ════════════════════════════════════════ -->
+  <!-- Head shape -->
+  <ellipse cx="171" cy="72" rx="22" ry="26" fill="#2D1208" transform="rotate(-8,171,72)"/>
+  <!-- Face silhouette — profile facing left -->
+  <path d="M 162 60 
+           C 152 60 144 67 142 76
+           C 140 84 143 93 149 97
+           C 152 99 154 100 154 103
+           C 155 107 153 110 152 113
+           L 158 114
+           C 159 111 161 107 160 102
+           C 159 97 156 95 155 91
+           C 151 87 150 80 152 74
+           C 154 68 159 64 166 63
+           Z"
+        fill="#3D1A0A"/>
+
+  <!-- Neck -->
+  <path d="M 154 110 C 152 116 152 122 155 127 L 162 124 C 159 120 159 114 161 109 Z"
+        fill="#3D1A0A"/>
+
+  <!-- Hair parting line + headband -->
+  <path d="M 162 58 C 170 54 180 55 186 60" stroke="#D4A017" stroke-width="1.5" fill="none" opacity="0.7"/>
+
+  <!-- ══════════════════════════════════════
+       GOLD FLOWER HAIR ORNAMENT
+  ════════════════════════════════════════ -->
+  <g transform="translate(183, 60)">
+    <!-- Flower center -->
+    <circle cx="0" cy="0" r="5" fill="#D4A017"/>
+    <!-- Petals -->
+    <ellipse cx="0" cy="-9" rx="3" ry="5" fill="#E8C84A" transform="rotate(0)"/>
+    <ellipse cx="0" cy="-9" rx="3" ry="5" fill="#E8C84A" transform="rotate(45)"/>
+    <ellipse cx="0" cy="-9" rx="3" ry="5" fill="#E8C84A" transform="rotate(90)"/>
+    <ellipse cx="0" cy="-9" rx="3" ry="5" fill="#E8C84A" transform="rotate(135)"/>
+    <ellipse cx="0" cy="-9" rx="3" ry="5" fill="#E8C84A" transform="rotate(180)"/>
+    <ellipse cx="0" cy="-9" rx="3" ry="5" fill="#E8C84A" transform="rotate(225)"/>
+    <ellipse cx="0" cy="-9" rx="3" ry="5" fill="#E8C84A" transform="rotate(270)"/>
+    <ellipse cx="0" cy="-9" rx="3" ry="5" fill="#E8C84A" transform="rotate(315)"/>
+    <circle cx="0" cy="0" r="3.5" fill="#B8860B"/>
+  </g>
+
+  <!-- ══════════════════════════════════════
+       BLOUSE / UPPER BODY (dark)
+  ════════════════════════════════════════ -->
+  <path d="M 155 126 
+           C 152 126 146 128 143 132
+           C 140 136 139 142 140 148
+           C 141 154 144 160 148 164
+           C 152 168 157 170 162 170
+           C 166 170 170 168 172 165
+           C 175 162 175 158 174 154
+           L 170 132
+           C 168 128 162 126 155 126 Z"
+        fill="#1A0800"/>
+
+  <!-- Blouse gold decorative border -->
+  <path d="M 143 132 C 148 128 158 126 168 130" stroke="#D4A017" stroke-width="1.5" fill="none" opacity="0.8"/>
+  <path d="M 141 142 C 142 138 143 134 145 131" stroke="#D4A017" stroke-width="1" fill="none" opacity="0.6"/>
+
+  <!-- Gold zari detailing on blouse -->
+  <path d="M 150 140 C 156 138 162 138 168 140" stroke="#D4A017" stroke-width="1.2" fill="none" opacity="0.7"/>
+  <path d="M 151 145 C 157 143 163 143 169 145" stroke="#D4A017" stroke-width="1" fill="none" opacity="0.6"/>
+
+  <!-- ══════════════════════════════════════
+       SAREE DRAPE — main body
+  ════════════════════════════════════════ -->
+  <!-- Main saree mass — large sweeping crimson shape -->
+  <path d="M 148 164 
+           C 140 170 132 178 126 190
+           C 118 205 116 222 118 238
+           C 120 252 126 264 134 272
+           C 142 280 154 284 166 284
+           C 178 284 192 280 204 272
+           C 218 263 228 250 234 235
+           C 240 220 240 204 236 190
+           C 232 176 224 166 216 160
+           C 208 154 198 152 190 154
+           L 174 160 
+           C 168 163 162 166 155 166
+           Z"
+        fill="url(#sareeGrad)"/>
+
+  <!-- Pallu (saree end piece) — flowing over shoulder -->
+  <path d="M 162 166
+           C 168 162 175 159 182 158
+           C 190 157 198 160 204 166
+           C 210 172 214 180 216 190
+           C 218 200 216 210 212 218
+           L 200 222
+           C 204 213 205 204 202 195
+           C 199 186 194 178 188 173
+           C 183 168 177 166 170 167
+           Z"
+        fill="#9B1020" opacity="0.85"/>
+
+  <!-- Gold stripes on saree (zari work) -->
+  <path d="M 148 165 C 160 162 172 161 184 162 C 196 163 206 168 212 176" 
+        stroke="#D4A017" stroke-width="2.5" fill="none" opacity="0.9"/>
+  <path d="M 145 175 C 158 171 172 170 186 172 C 198 174 208 180 214 190" 
+        stroke="#D4A017" stroke-width="2" fill="none" opacity="0.8"/>
+  <path d="M 142 186 C 156 182 170 181 184 184 C 196 187 206 194 210 205" 
+        stroke="#D4A017" stroke-width="1.8" fill="none" opacity="0.7"/>
+  <path d="M 140 198 C 152 194 166 193 180 196 C 192 199 200 208 202 220" 
+        stroke="#D4A017" stroke-width="1.5" fill="none" opacity="0.6"/>
+
+  <!-- Saree decorative motifs (stylised flowers/paisleys) -->
+  <!-- Motif cluster on lower saree -->
+  <g opacity="0.75">
+    <circle cx="158" cy="240" r="4" fill="#D4A017"/>
+    <circle cx="158" cy="240" r="2" fill="#8B0D20"/>
+    <circle cx="174" cy="256" r="4.5" fill="#D4A017"/>
+    <circle cx="174" cy="256" r="2.2" fill="#8B0D20"/>
+    <circle cx="192" cy="245" r="3.5" fill="#D4A017"/>
+    <circle cx="192" cy="245" r="1.8" fill="#8B0D20"/>
+    <circle cx="142" cy="255" r="3" fill="#D4A017"/>
+    <circle cx="142" cy="255" r="1.5" fill="#8B0D20"/>
+    <!-- Small scrolls -->
+    <path d="M 162 250 C 165 246 170 246 172 250 C 174 254 171 258 168 258 C 165 258 163 255 164 252" 
+          stroke="#D4A017" stroke-width="1.2" fill="none"/>
+    <path d="M 180 260 C 183 256 188 256 190 260 C 192 264 189 268 186 268 C 183 268 181 265 182 262" 
+          stroke="#D4A017" stroke-width="1.2" fill="none"/>
+  </g>
+
+  <!-- Saree pleats at bottom -->
+  <path d="M 126 268 C 140 278 155 284 170 285 C 185 286 200 282 212 274"
+        stroke="#7A0A18" stroke-width="2" fill="none" opacity="0.8"/>
+  <path d="M 128 272 C 142 281 157 287 172 288 C 187 289 202 285 213 277"
+        stroke="#D4A017" stroke-width="1.2" fill="none" opacity="0.5"/>
+
+  <!-- Big scroll on lower-left of saree (matching original) -->
+  <path d="M 128 262 C 118 268 110 278 114 290 C 118 300 130 304 140 300 C 150 296 154 285 148 277"
+        stroke="#8B0D20" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M 148 277 C 144 272 137 272 134 276 C 131 280 133 286 138 286 C 143 286 146 281 144 278"
+        stroke="#8B0D20" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+  <!-- Right scroll of saree -->
+  <path d="M 232 256 C 242 262 246 274 240 284 C 234 294 222 296 213 290"
+        stroke="#8B0D20" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Hand/arm resting -->
+  <path d="M 162 210 C 158 216 156 224 158 232 C 160 238 165 242 170 242 C 176 242 180 237 180 231 L 178 218 C 176 212 170 208 164 208 Z"
+        fill="#2D1208" opacity="0.7"/>
+
+  <!-- ══════════════════════════════════════
+       HAIR FLOWING DOWN (behind body)
+  ════════════════════════════════════════ -->
+  <path d="M 165 130
+           C 168 142 168 156 166 170
+           C 164 184 160 198 158 212
+           C 156 226 157 240 160 252
+           L 168 250
+           C 165 238 164 224 166 210
+           C 168 196 172 182 174 168
+           C 176 154 174 140 170 128 Z"
+        fill="#1A0A00" opacity="0.6"/>
+
+  <!-- ══════════════════════════════════════
+       TEXT — SonAff (cursive, crimson)
+  ════════════════════════════════════════ -->
+  <text
+    x="180"
+    y="327"
+    text-anchor="middle"
+    font-family="'Playfair Display', 'Georgia', 'Times New Roman', serif"
+    font-size="56"
+    font-style="italic"
+    font-weight="500"
+    fill="#8B0D20"
+    letter-spacing="-1"
+  >SonAff</text>
+
+  <!-- ══════════════════════════════════════
+       TEXT — SAREE (gold, small caps)
+  ════════════════════════════════════════ -->
+  <!-- Left decorative arrow line -->
+  <line x1="80" y1="358" x2="124" y2="358" stroke="#C8961A" stroke-width="1.5"/>
+  <polygon points="80,358 86,354 86,362" fill="#C8961A"/>
+
+  <!-- Right decorative arrow line -->
+  <line x1="280" y1="358" x2="236" y2="358" stroke="#C8961A" stroke-width="1.5"/>
+  <polygon points="280,358 274,354 274,362" fill="#C8961A"/>
+
+  <text
+    x="180"
+    y="364"
+    text-anchor="middle"
+    font-family="'Montserrat', 'Arial', sans-serif"
+    font-size="18"
+    font-weight="600"
+    fill="#C8961A"
+    letter-spacing="8"
+  >SAREE</text>
+
+</svg>

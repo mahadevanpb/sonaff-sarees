@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SonAff Saree  Authentic Indian Heritage Sarees</title>
+  <meta name="description" content="Discover the finest authentic regional heritage sarees from across India. Handwoven Banarasi, Kanjivaram, Chanderi, Tussar, Patola and more  curated for the modern Indian woman." />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ======================================
+       HEADER / NAVIGATION
+  ======================================= -->
+  <header id="site-header" class="site-header">
+    <div class="header-inner">
+
+      <!-- Left Nav -->
+      <nav class="nav-left" aria-label="Primary navigation">
+        <a href="#" class="nav-link active" id="nav-home" onclick="showView('home', event)">Home</a>
+        <a href="#" class="nav-link" id="nav-catalog" onclick="showView('catalog', event)">Catalog</a>
+        <a href="#" class="nav-link" id="nav-about" onclick="showView('about', event)">About</a>
+        <a href="#" class="nav-link" id="nav-contact" onclick="showView('contact', event)">Contact</a>
+      </nav>
+
+      <!-- Centre Logo -->
+      <div class="logo-center">
+        <a href="#" onclick="showView('home', event)" class="logo-link" aria-label="SonAff Saree Home">
+          <img src="images/logo_white.jpg" alt="SonAff Saree Logo" class="logo-img" />
+        </a>
+      </div>
+
+      <!-- Right: Search only -->
+      <div class="nav-right">
+        <button class="icon-btn" aria-label="Search" id="btn-search" onclick="toggleSearch()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+        <!-- Mobile Hamburger  animated to X -->
+        <button class="icon-btn mobile-menu-btn" aria-label="Menu" id="btn-mobile-menu" onclick="toggleMobileMenu()">
+          <span class="hamburger-icon">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar" id="search-bar">
+      <div class="search-inner">
+        <input type="text" placeholder="Search sarees, regions, styles…" class="search-input" id="search-input" oninput="handleSearch(this.value)" />
+        <button class="search-close" onclick="toggleSearch()" aria-label="Close search">✕</button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu  Fullscreen frosted overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#" class="mobile-nav-link" onclick="showView('home', event)">Home</a>
+      <a href="#" class="mobile-nav-link" onclick="showView('catalog', event)">Catalog</a>
+      <a href="#" class="mobile-nav-link" onclick="showView('about', event)">About</a>
+      <a href="#" class="mobile-nav-link" onclick="showView('contact', event)">Contact</a>
+    </div>
+  </header>
+
+  <!-- ======================================
+       HOME VIEW
+  ======================================= -->
+  <main id="view-home" class="view active">
+
+    <!-- ── HERO: Full-bleed Lifestyle Banner ── -->
+    <section class="hero-lifestyle" aria-label="Hero lifestyle section">
+      <img src="images/hero_saree_model.png" alt="Woman wearing a vibrant red Kanjivaram silk saree" class="hero-lifestyle-img" loading="eager" />
+      <div class="hero-overlay">
+        <div class="hero-text">
+          <span class="hero-eyebrow">The Living Heritage Collection</span>
+          <h1 class="hero-headline">Where Tradition<br /><em>Meets Grace</em></h1>
+          <p class="hero-sub">Handwoven across India's most celebrated looms  crafted to be worn, loved &amp; lived in.</p>
+          <div class="hero-cta-row desktop-cta">
+            <button class="btn-light" onclick="scrollToProducts()">Explore Collection</button>
+            <button class="btn-ghost" onclick="showView('catalog', event)">View All Sarees</button>
+          </div>
+        </div>
+        <!-- Scroll indicator  animated line (from portfolio) -->
+        <div class="scroll-indicator" onclick="scrollToProducts()" aria-label="Scroll down">
+          <div class="scroll-indicator-line"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mobile-only CTA Section -->
+    <div class="mobile-cta-section">
+      <button class="btn-dark" onclick="scrollToProducts()">Explore Collection</button>
+      <button class="btn-outline-dark" onclick="showView('catalog', event)">View All Sarees</button>
+    </div>
+
+    <!-- ── FEATURED PRODUCTS CAROUSEL ── -->
+    <section class="featured-section" id="featured-products" aria-label="Featured products carousel">
+      <div class="section-header reveal">
+        <div class="section-rule"></div>
+        <h2 class="section-title">Featured Pieces</h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <div class="carousel-wrapper">
+        <!-- Prev Button -->
+        <button class="carousel-arrow carousel-prev" id="carousel-prev" onclick="slideCarousel(-1)" aria-label="Previous product">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+
+        <!-- Track -->
+        <div class="carousel-viewport" id="carousel-viewport">
+          <div class="carousel-track" id="carousel-track">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Next Button -->
+        <button class="carousel-arrow carousel-next" id="carousel-next" onclick="slideCarousel(1)" aria-label="Next product">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Dots -->
+      <div class="carousel-dots" id="carousel-dots"></div>
+
+      <div class="view-all-wrap fade-up">
+        <button class="btn-outline-dark" onclick="showView('catalog', event)">View Full Catalog →</button>
+      </div>
+    </section>
+
+    <!-- ── MANIFESTO ── -->
+    <section class="manifesto" aria-label="Brand manifesto">
+      <div class="manifesto-inner reveal">
+        <div class="manifesto-rule"></div>
+        <p class="manifesto-quote">
+          &ldquo;We don&rsquo;t sell sarees.<br class="desktop-br" />We carry stories home to you.&rdquo;
+        </p>
+        <div class="manifesto-rule"></div>
+        <p class="manifesto-sub">From the looms of Varanasi to the doorsteps of Karnataka  every piece we bring is handpicked for its authenticity, craft, and soul.</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <button class="btn-dark" onclick="showView('catalog', event)">Shop Now</button>
+          <button class="btn-outline" onclick="showView('about', event)">Our Story</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── REGIONAL CATEGORIES ── -->
+    <section class="regions-section" aria-label="Shop by region">
+      <div class="section-header reveal">
+        <div class="section-rule"></div>
+        <h2 class="section-title">By Region</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="regions-grid">
+        <div class="region-card fade-up" onclick="showView('catalog', event)">
+          <div class="region-icon">🏛️</div>
+          <div class="region-name">Varanasi</div>
+          <div class="region-saree">Banarasi Silk</div>
+        </div>
+        <div class="region-card fade-up" onclick="showView('catalog', event)">
+          <div class="region-icon">🌺</div>
+          <div class="region-name">Kanchipuram</div>
+          <div class="region-saree">Kanjivaram Silk</div>
+        </div>
+        <div class="region-card fade-up" onclick="showView('catalog', event)">
+          <div class="region-icon">🌸</div>
+          <div class="region-name">Chanderi</div>
+          <div class="region-saree">Chanderi Silk</div>
+        </div>
+        <div class="region-card fade-up" onclick="showView('catalog', event)">
+          <div class="region-icon">🌿</div>
+          <div class="region-name">Bhagalpur</div>
+          <div class="region-saree">Tussar Handloom</div>
+        </div>
+        <div class="region-card fade-up" onclick="showView('catalog', event)">
+          <div class="region-icon">🦚</div>
+          <div class="region-name">Patan</div>
+          <div class="region-saree">Patola Ikat</div>
+        </div>
+        <div class="region-card fade-up" onclick="showView('catalog', event)">
+          <div class="region-icon">💎</div>
+          <div class="region-name">Pochampally</div>
+          <div class="region-saree">Ikat Silk</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer class="site-footer" aria-label="Site footer">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <div class="footer-logo-wrap">
+            <img src="images/logo_white.jpg" alt="SonAff Saree" class="footer-logo-img" />
+          </div>
+          <p class="footer-tagline">Authentic regional heritage sarees<br />crafted to be worn, loved &amp; lived in.</p>
+          <nav class="footer-nav" aria-label="Footer links">
+            <a href="#" class="footer-link" onclick="showView('home', event)">Home</a>
+            <a href="#" class="footer-link" onclick="showView('catalog', event)">Catalog</a>
+            <a href="#" class="footer-link" onclick="showView('about', event)">About Us</a>
+            <a href="#" class="footer-link" onclick="showView('contact', event)">Contact</a>
+            <a href="#" class="footer-link" id="return-policy-link">Return Policy</a>
+            <a href="#" class="footer-link" onclick="showView('contact', event)">Help &amp; Questions</a>
+          </nav>
+        </div>
+        <div class="footer-right">
+          <h3 class="footer-connect-title">Stay Connected</h3>
+          <p class="footer-connect-sub">Be the first to know about new arrivals,<br />exclusive weaves &amp; heritage stories.</p>
+          <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+            <input type="email" id="newsletter-email" placeholder="Your email address" class="newsletter-input" required aria-label="Email address for newsletter" />
+            <button type="submit" class="btn-newsletter">Sign Up</button>
+          </form>
+          <div class="social-icons">
+            <a href="#" class="social-link" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            </a>
+            <a href="#" class="social-link" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+            <a href="https://wa.me/916235128492" class="social-link" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+              </svg>
+            </a>
+            <a href="#" class="social-link" aria-label="Pinterest">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/>
+              </svg>
+            </a>
+          </div>
+          <p class="footer-copyright">© 2026 SonAff Saree. All rights reserved.<br />Celebrating India's Woven Heritage.</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ======================================
+       CATALOG VIEW
+  ======================================= -->
+  <main id="view-catalog" class="view hidden">
+    <div class="page-banner">
+      <h1 class="page-banner-title">The Full Collection</h1>
+      <p class="page-banner-sub">Authentic regional sarees, handpicked from master weavers across India</p>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterProducts('all', this)" id="filter-all">All</button>
+      <button class="filter-btn" onclick="filterProducts('silk', this)" id="filter-silk">Silk</button>
+      <button class="filter-btn" onclick="filterProducts('handloom', this)" id="filter-handloom">Handloom</button>
+      <button class="filter-btn" onclick="filterProducts('ikat', this)" id="filter-ikat">Ikat</button>
+      <button class="filter-btn" onclick="filterProducts('cotton', this)" id="filter-cotton">Cotton</button>
+    </div>
+
+    <div class="catalog-container">
+      <div class="products-grid" id="products-grid"></div>
+    </div>
+
+    <footer class="site-footer" aria-label="Catalog footer">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <div class="footer-logo-wrap">
+            <img src="images/logo_white.jpg" alt="SonAff Saree" class="footer-logo-img" />
+          </div>
+          <nav class="footer-nav" aria-label="Catalog footer nav">
+            <a href="#" class="footer-link" onclick="showView('home', event)">Home</a>
+            <a href="#" class="footer-link" onclick="showView('catalog', event)">Catalog</a>
+            <a href="#" class="footer-link" onclick="showView('contact', event)">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-right">
+          <h3 class="footer-connect-title">Stay Connected</h3>
+          <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+            <input type="email" placeholder="Your email address" class="newsletter-input" required aria-label="Email newsletter catalog" />
+            <button type="submit" class="btn-newsletter">Sign Up</button>
+          </form>
+          <p class="footer-copyright">© 2026 SonAff Saree. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ======================================
+       CONTACT VIEW
+  ======================================= -->
+  <main id="view-contact" class="view hidden">
+    <div class="page-banner">
+      <h1 class="page-banner-title">Get In Touch</h1>
+      <p class="page-banner-sub">We'd love to hear from you  questions, custom orders, or just a hello</p>
+    </div>
+
+    <div class="contact-container">
+      <div class="contact-split">
+        <div class="contact-form-wrap">
+          <h2 class="contact-form-title">Send Us a Message</h2>
+          <p class="contact-form-sub">Our team typically responds within 24 hours.</p>
+          <form class="contact-form" id="contact-form" onsubmit="handleContact(event)" novalidate>
+            <div class="form-group">
+              <label for="contact-name" class="form-label">Full Name</label>
+              <input type="text" id="contact-name" name="name" class="form-input" placeholder="Your full name" required />
+            </div>
+            <div class="form-group">
+              <label for="contact-email" class="form-label">Email Address</label>
+              <input type="email" id="contact-email" name="email" class="form-input" placeholder="your@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="contact-subject" class="form-label">Subject</label>
+              <input type="text" id="contact-subject" name="subject" class="form-input" placeholder="Product enquiry, custom order…" />
+            </div>
+            <div class="form-group">
+              <label for="contact-message" class="form-label">Message</label>
+              <textarea id="contact-message" name="message" class="form-textarea" rows="5" placeholder="Tell us what's on your mind…" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary btn-full" id="contact-submit-btn">Send Message</button>
+            <div class="form-success hidden" id="form-success">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Thank you! We'll be in touch soon.
+            </div>
+          </form>
+        </div>
+
+        <div class="contact-info-wrap">
+          <div class="contact-info-card">
+            <h3 class="contact-info-title">Visit Us / Write To Us</h3>
+            <div class="info-item">
+              <div class="info-icon">📍</div>
+              <div>
+                <div class="info-label">Address</div>
+                <div class="info-value">SonAff Saree Studio<br />308, 3rd Cross, Vibhuthipura<br />HAL, Bengaluru</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">📞</div>
+              <div>
+                <div class="info-label">Phone / WhatsApp</div>
+                <div class="info-value"><a href="https://wa.me/916235128492" target="_blank" rel="noopener noreferrer" class="info-link">+91 99999 99999</a></div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">✉️</div>
+              <div>
+                <div class="info-label">Email</div>
+                <div class="info-value"><a href="mailto:sonaffsarees@gmail.com" class="info-link">sonaffsarees@gmail.com</a></div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">🕐</div>
+              <div>
+                <div class="info-label">Studio Hours</div>
+                <div class="info-value">Mon – Sat: 10:00 AM – 7:00 PM<br />Sunday: By Appointment</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="whatsapp-cta-card">
+            <div class="whatsapp-cta-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+              </svg>
+            </div>
+            <h4 class="whatsapp-cta-title">Prefer WhatsApp?</h4>
+            <p class="whatsapp-cta-text">Chat directly with our saree specialists for personalised recommendations.</p>
+            <a href="https://wa.me/916235128492?text=Hello!%20I%20have%20a%20question%20about%20SonAff%20Saree." target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+              Chat on WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer" aria-label="Contact footer">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <div class="footer-logo-wrap">
+            <img src="images/logo_white.jpg" alt="SonAff Saree" class="footer-logo-img" />
+          </div>
+          <nav class="footer-nav" aria-label="Contact footer nav">
+            <a href="#" class="footer-link" onclick="showView('home', event)">Home</a>
+            <a href="#" class="footer-link" onclick="showView('catalog', event)">Catalog</a>
+            <a href="#" class="footer-link" onclick="showView('contact', event)">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-right">
+          <p class="footer-copyright">© 2026 SonAff Saree. All rights reserved.<br />Celebrating India's Woven Heritage.</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ======================================
+       ABOUT VIEW
+  ======================================= -->
+  <main id="view-about" class="view hidden">
+
+    <!-- Page Banner -->
+    <div class="page-banner">
+      <h1 class="page-banner-title">Our Story</h1>
+      <p class="page-banner-sub">Curating India's finest sarees, one loom at a time</p>
+    </div>
+
+    <!-- WHO WE ARE -->
+    <section class="about-section">
+      <div class="about-intro-grid">
+        <div class="about-intro-text fade-up">
+          <span class="about-eyebrow">Who We Are</span>
+          <h2 class="about-heading">Not a store.<br/>A curation.</h2>
+          <p class="about-body">
+            SonAff Saree was born from a simple belief: every woman deserves access to the most authentic, 
+            handcrafted sarees that India's master weavers create  without having to travel thousands of kilometres to find them.
+          </p>
+          <p class="about-body">
+            We are a Bengaluru-based team of saree enthusiasts who travel across India's greatest weaving heartlands 
+             Varanasi, Kanchipuram, Chanderi, Pochampally, Patan, Bhagalpur  to discover exclusive collections 
+            directly from the hands that make them. Every piece we carry has been personally selected for its 
+            craftsmanship, authenticity, and beauty.
+          </p>
+          <p class="about-body">
+            Starting with customers across Karnataka, our mission is to eventually bring these living treasures 
+            to saree lovers all over India.
+          </p>
+        </div>
+        <div class="about-intro-visual fade-up">
+          <div class="about-stat-grid">
+            <div class="about-stat">
+              <div class="about-stat-number">10+</div>
+              <div class="about-stat-label">Weaving Regions</div>
+            </div>
+            <div class="about-stat">
+              <div class="about-stat-number">100%</div>
+              <div class="about-stat-label">Handpicked</div>
+            </div>
+            <div class="about-stat">
+              <div class="about-stat-number">Karnataka</div>
+              <div class="about-stat-label">Serving You First</div>
+            </div>
+            <div class="about-stat">
+              <div class="about-stat-number">&infin;</div>
+              <div class="about-stat-label">Stories Worn</div>
+            </div>
+          </div>
+          <div class="about-badge">
+            <span class="about-badge-icon">🧵</span>
+            <p>Every saree is sourced directly  no middlemen, no compromises on authenticity.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="about-process-section">
+      <div class="about-process-inner">
+        <div class="section-header fade-up">
+          <div class="section-rule"></div>
+          <h2 class="section-title">How We Work</h2>
+          <div class="section-rule"></div>
+        </div>
+        <div class="about-process-steps">
+          <div class="about-step fade-up">
+            <div class="about-step-icon">🗺️</div>
+            <div class="about-step-num">01</div>
+            <h3 class="about-step-title">We Discover</h3>
+            <p class="about-step-body">Our team travels to weaving clusters across India, meeting master craftspeople at their looms and understanding the heritage behind every technique.</p>
+          </div>
+          <div class="about-step-divider"></div>
+          <div class="about-step fade-up">
+            <div class="about-step-icon">✨</div>
+            <div class="about-step-num">02</div>
+            <h3 class="about-step-title">We Curate</h3>
+            <p class="about-step-body">Only a fraction of what we see makes the cut. We select pieces that are exceptional in weave quality, design authenticity, and the story they carry.</p>
+          </div>
+          <div class="about-step-divider"></div>
+          <div class="about-step fade-up">
+            <div class="about-step-icon">🏠</div>
+            <div class="about-step-num">03</div>
+            <h3 class="about-step-title">We Deliver</h3>
+            <p class="about-step-body">From our hands to your wardrobe  we offer personalised service via WhatsApp so you can ask questions, see more details, and shop with confidence.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUALITY PROMISE -->
+    <section class="about-quality-section">
+      <div class="about-quality-inner">
+        <div class="section-header fade-up">
+          <div class="section-rule"></div>
+          <h2 class="section-title">Our Quality Promise</h2>
+          <div class="section-rule"></div>
+        </div>
+        <div class="about-quality-grid">
+          <div class="about-quality-card fade-up">
+            <div class="about-quality-icon">🏺</div>
+            <h3>Authenticity Guaranteed</h3>
+            <p>Every saree we carry is genuine  sourced directly from weavers and verified for authenticity. No power-loom imitations, no shortcuts.</p>
+          </div>
+          <div class="about-quality-card fade-up">
+            <div class="about-quality-icon">👐</div>
+            <h3>Handpicked, Not Bulk-Bought</h3>
+            <p>We don't stock warehouses. Each piece is individually selected by us in person, which means every saree you see is one we genuinely love.</p>
+          </div>
+          <div class="about-quality-card fade-up">
+            <div class="about-quality-icon">🤝</div>
+            <h3>Direct Weaver Support</h3>
+            <p>By sourcing directly from artisan clusters, we ensure weavers receive fair prices for their craft and their traditions continue to thrive.</p>
+          </div>
+          <div class="about-quality-card fade-up">
+            <div class="about-quality-icon">💬</div>
+            <h3>Personal Service</h3>
+            <p>Have questions before you buy? Message us on WhatsApp. We know every saree in our collection and will help you find the perfect one.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials-section">
+      <div class="testimonials-inner">
+        <div class="section-header fade-up">
+          <div class="section-rule"></div>
+          <h2 class="section-title">What Our Customers Say</h2>
+          <div class="section-rule"></div>
+        </div>
+        <div class="testimonials-grid">
+
+          <div class="testimonial-card fade-up">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">&ldquo;I ordered a Kanjivaram for my daughter's wedding and the quality left everyone speechless. SonAff knew exactly what I was looking for even before I did. Absolutely phenomenal service.&rdquo;</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">SR</div>
+              <div>
+                <div class="testimonial-name">Savitha Raghunathan</div>
+                <div class="testimonial-location">Bengaluru, Karnataka</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card fade-up">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">&ldquo;I've been searching for a genuine Chanderi for years. SonAff found one that was beyond what I imagined  the weave is so delicate and the colours are stunning. I trust them completely now.&rdquo;</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MK</div>
+              <div>
+                <div class="testimonial-name">Meena Krishnamurthy</div>
+                <div class="testimonial-location">Mysuru, Karnataka</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card fade-up">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">&ldquo;What I love most is the personal touch  they actually WhatsApp you videos of the saree before you buy. That kind of transparency is rare. My Tussar silk arrived perfectly and is even more beautiful in person.&rdquo;</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">AP</div>
+              <div>
+                <div class="testimonial-name">Ananya Prasad</div>
+                <div class="testimonial-location">Hubli, Karnataka</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card fade-up">
+            <div class="testimonial-stars">★★★★☆</div>
+            <p class="testimonial-text">&ldquo;Gifted a Pochampally Ikat to my mother and she cried happy tears. SonAff helped me pick the right design and even shared the story of the weaver behind it. That made the gift so much more meaningful.&rdquo;</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">SP</div>
+              <div>
+                <div class="testimonial-name">Suma Patil</div>
+                <div class="testimonial-location">Mangaluru, Karnataka</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card fade-up">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">&ldquo;Finally a saree brand that truly understands quality over quantity. I've bought three sarees so far and every single one has been worth every rupee. SonAff is my go-to now for all occasions.&rdquo;</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">NR</div>
+              <div>
+                <div class="testimonial-name">Nandini Rao</div>
+                <div class="testimonial-location">Bengaluru, Karnataka</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card fade-up">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">&ldquo;I was hesitant to buy sarees online but SonAff changed that completely. The photos are accurate, the delivery was fast, and the saree itself is a masterpiece. Will definitely be a repeat customer.&rdquo;</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">PD</div>
+              <div>
+                <div class="testimonial-name">Preethi Desai</div>
+                <div class="testimonial-location">Dharwad, Karnataka</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <p class="testimonials-note">* Customer reviews collected via WhatsApp. Names used with permission.</p>
+      </div>
+    </section>
+
+    <!-- CTA STRIP -->
+    <section class="about-cta-section">
+      <div class="about-cta-inner fade-up">
+        <h2 class="about-cta-heading">Ready to find your saree?</h2>
+        <p class="about-cta-sub">Browse our curated collection or reach out on WhatsApp  we'll help you find the perfect piece.</p>
+        <div class="about-cta-btns">
+          <button class="btn-light" onclick="showView('catalog', event)">Browse Collection</button>
+          <a href="https://wa.me/916235128492?text=Hello!%20I%20would%20like%20to%20know%20more%20about%20SonAff%20Saree." target="_blank" rel="noopener noreferrer" class="btn-ghost">Chat on WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer" aria-label="About footer">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <div class="footer-logo-wrap">
+            <img src="images/logo_white.jpg" alt="SonAff Saree" class="footer-logo-img" />
+          </div>
+          <p class="footer-tagline">Curating India's finest sarees,<br />one loom at a time.</p>
+          <nav class="footer-nav" aria-label="About footer nav">
+            <a href="#" class="footer-link" onclick="showView('home', event)">Home</a>
+            <a href="#" class="footer-link" onclick="showView('catalog', event)">Catalog</a>
+            <a href="#" class="footer-link" onclick="showView('about', event)">About Us</a>
+            <a href="#" class="footer-link" onclick="showView('contact', event)">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-right">
+          <p class="footer-copyright">© 2026 SonAff Saree. All rights reserved.<br />Celebrating India's Woven Heritage.</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+  <!-- Mobile overlay -->
+  <div class="overlay hidden" id="overlay" onclick="closeMobileMenu()"></div>
+
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
