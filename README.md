@@ -238,6 +238,17 @@ The WhatsApp button is configured in **two places** — both must be updated tog
 
 2. **`index.html`** — Search for `wa.me` and update the number in the URL if it appears as a hardcoded link.
 
+### Contact Form (EmailJS)
+
+The website uses **EmailJS** to send messages from the Contact page form directly to your email without needing a server.
+To switch from a test account to a client's live EmailJS account, simply update the three keys at the top of **`app.js` (lines 26–28)**:
+
+```js
+const EMAILJS_SERVICE_ID  = 'service_xxxxxx';
+const EMAILJS_TEMPLATE_ID = 'template_xxxxxx';
+const EMAILJS_PUBLIC_KEY  = 'xxxxxxxxxxxxxxxx';
+```
+
 ---
 
 ## 9. Troubleshooting
@@ -291,10 +302,11 @@ The WhatsApp button is configured in **two places** — both must be updated tog
 
 ## 11. Backup
 
-A backup of the original website (before Shopify integration was added) is saved at:
+Backups of previous versions of the website are saved on your Desktop:
 
 ```
-C:\Users\Mahadevan\Desktop\sonaff sarees v1\
+C:\Users\Mahadevan\Desktop\sonaff sarees v4\   # Backup before EmailJS integration
+C:\Users\Mahadevan\Desktop\sonaff sarees v1\   # Original vanilla HTML/JS version
 ```
 
 If anything goes wrong with the current version, you can restore files from there.
