@@ -7,13 +7,10 @@
   <meta name="description" content="Discover the finest authentic regional heritage sarees from across India. Handwoven Banarasi, Kanjivaram, Chanderi, Tussar, Patola and more  curated for the modern Indian woman." />
   <meta name="theme-color" content="#ffffff" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <!-- Preload LCP hero image for instant first paint -->
-  <link rel="preload" as="image" href="assets/images/hero_saree_model.png" fetchpriority="high" />
-  <!-- DNS prefetch for third-party origins -->
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-  <link rel="stylesheet" href="src/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -21,16 +18,6 @@
        HEADER / NAVIGATION
   ======================================= -->
   <header id="site-header" class="site-header">
-    <!-- Announcement Bar -->
-    <div class="announcement-bar" id="announcement-bar">
-      <div class="announcement-inner">
-        <span class="announcement-item">✨ <em>100% Handpicked</em> Artisan Sarees</span>
-        <span class="announcement-divider">•</span>
-        <span class="announcement-item">🧵 Direct from <em>Master Weavers</em> Across India</span>
-        <span class="announcement-divider">•</span>
-        <span class="announcement-item">📦 Free Domestic Shipping &amp; <em>WhatsApp Support</em></span>
-      </div>
-    </div>
     <div class="header-inner">
 
       <!-- Left Nav -->
@@ -44,7 +31,7 @@
       <!-- Centre Logo -->
       <div class="logo-center">
         <a href="#" onclick="showView('home', event)" class="logo-link" aria-label="SonAff Saree Home">
-          <img src="assets/images/logo_white.jpg" alt="SonAff Saree Logo" class="logo-img" decoding="async" />
+          <img src="images/logo_white.jpg" alt="SonAff Saree Logo" class="logo-img" />
         </a>
       </div>
 
@@ -88,28 +75,20 @@
   ======================================= -->
   <main id="view-home" class="view active">
 
-    <!-- ── HERO: Full-bleed Cinematic Editorial Spread ── -->
+    <!-- ── HERO: Full-bleed Lifestyle Banner ── -->
     <section class="hero-lifestyle" aria-label="Hero lifestyle section">
-      <img src="assets/images/hero_saree_model.png" alt="Woman wearing a vibrant red Kanjivaram silk saree" class="hero-lifestyle-img" loading="eager" fetchpriority="high" decoding="async" />
+      <img src="images/hero_saree_model.png" alt="Woman wearing a vibrant red Kanjivaram silk saree" class="hero-lifestyle-img" loading="eager" />
       <div class="hero-overlay">
-        <div class="hero-frame-border">
-          <div class="hero-floating-badge top-right">
-            <span>✨ Verified Master Weavers</span>
-          </div>
-          <div class="hero-text">
-            <span class="hero-eyebrow">✦ The Heritage Connoisseur Collection ✦</span>
-            <h1 class="hero-headline">Sacred Looms of<br /><em>Royal India</em></h1>
-            <p class="hero-sub">Handcrafted heirlooms from the centuries-old looms of Varanasi and Kanchipuram — woven with tested electro-plated fine zari and pure silk.</p>
-            <div class="hero-cta-row desktop-cta">
-              <button class="btn-primary" onclick="scrollToProducts()">Explore The Royal Weaves</button>
-              <button class="btn-ghost" onclick="showView('catalog', event)">View Connoisseur Catalog</button>
-            </div>
-          </div>
-          <div class="hero-floating-badge bottom-left">
-            <span>🧵 100% Authentic Handloom</span>
+        <div class="hero-text">
+          <span class="hero-eyebrow">The Living Heritage Collection</span>
+          <h1 class="hero-headline">Where Tradition<br /><em>Meets Grace</em></h1>
+          <p class="hero-sub">Handwoven across India's most celebrated looms  crafted to be worn, loved &amp; lived in.</p>
+          <div class="hero-cta-row desktop-cta">
+            <button class="btn-light" onclick="scrollToProducts()">Explore Collection</button>
+            <button class="btn-ghost" onclick="showView('catalog', event)">View All Sarees</button>
           </div>
         </div>
-        <!-- Scroll indicator -->
+        <!-- Scroll indicator  animated line (from portfolio) -->
         <div class="scroll-indicator" onclick="scrollToProducts()" aria-label="Scroll down">
           <div class="scroll-indicator-line"></div>
         </div>
@@ -118,103 +97,46 @@
 
     <!-- Mobile-only CTA Section -->
     <div class="mobile-cta-section">
-      <button class="btn-primary btn-full" onclick="scrollToProducts()">Explore The Royal Weaves</button>
-      <button class="btn-outline-dark btn-full" onclick="showView('catalog', event)" style="margin-top:0.75rem;">View Connoisseur Catalog</button>
+      <button class="btn-dark" onclick="scrollToProducts()">Explore Collection</button>
+      <button class="btn-outline-dark" onclick="showView('catalog', event)">View All Sarees</button>
     </div>
-
-    <!-- ── THE LOOM ARTISTRY: CURATED WEAVE COLLECTIONS ── -->
-    <section class="weave-artistry-section" aria-label="Sacred weaves of India">
-      <div class="section-header reveal">
-        <div class="section-rule"></div>
-        <span class="section-eyebrow">Artisanal Nomenclature</span>
-        <h2 class="section-title">The Sacred Weaves</h2>
-        <div class="section-rule"></div>
-      </div>
-      <div class="weave-grid">
-        <div class="weave-card glass-card fade-up" onclick="filterByWeave('silk', event)">
-          <div class="weave-card-badge">Varanasi • U.P.</div>
-          <h3 class="weave-card-title">Banarasi Katan Silk</h3>
-          <p class="weave-card-desc">Known for dense floral kadwa brocades, gold zari motifs, and regal heavy drapes worthy of royal weddings.</p>
-          <span class="weave-card-link">Explore Banarasi →</span>
-        </div>
-        <div class="weave-card glass-card fade-up" onclick="filterByWeave('silk', event)">
-          <div class="weave-card-badge">Kanchipuram • T.N.</div>
-          <h3 class="weave-card-title">Heirloom Kanjivaram</h3>
-          <p class="weave-card-desc">Distinguished by contrasting temple borders woven via three shuttle korvai technique and tested pure zari.</p>
-          <span class="weave-card-link">Explore Kanjivaram →</span>
-        </div>
-        <div class="weave-card glass-card fade-up" onclick="filterByWeave('handloom', event)">
-          <div class="weave-card-badge">Chanderi • M.P.</div>
-          <h3 class="weave-card-title">Royal Chanderi Gossamer</h3>
-          <p class="weave-card-desc">Feather-light sheer texture combining pure silk and fine cotton with traditional gold coin buttis.</p>
-          <span class="weave-card-link">Explore Chanderi →</span>
-        </div>
-        <div class="weave-card glass-card fade-up" onclick="filterByWeave('handloom', event)">
-          <div class="weave-card-badge">Bhagalpur • Bihar</div>
-          <h3 class="weave-card-title">Wild Tussar Handloom</h3>
-          <p class="weave-card-desc">Rich gold-sheen organic wild silk characterized by its textured feel and earthy tribal heritage motifs.</p>
-          <span class="weave-card-link">Explore Tussar →</span>
-        </div>
-      </div>
-    </section>
 
     <!-- ── FEATURED PRODUCTS CAROUSEL ── -->
     <section class="featured-section" id="featured-products" aria-label="Featured products carousel">
       <div class="section-header reveal">
         <div class="section-rule"></div>
-        <span class="section-eyebrow">Curated Selection</span>
-        <h2 class="section-title">Featured Masterpieces</h2>
+        <h2 class="section-title">Featured Pieces</h2>
         <div class="section-rule"></div>
       </div>
 
       <div class="carousel-wrapper">
+        <!-- Prev Button -->
         <button class="carousel-arrow carousel-prev" id="carousel-prev" onclick="slideCarousel(-1)" aria-label="Previous product">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="15 18 9 12 15 6"/>
           </svg>
         </button>
+
+        <!-- Track -->
         <div class="carousel-viewport" id="carousel-viewport">
-          <div class="carousel-track" id="carousel-track"></div>
+          <div class="carousel-track" id="carousel-track">
+            <!-- Populated by JS -->
+          </div>
         </div>
+
+        <!-- Next Button -->
         <button class="carousel-arrow carousel-next" id="carousel-next" onclick="slideCarousel(1)" aria-label="Next product">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"/>
           </svg>
         </button>
       </div>
-      <div class="carousel-dots" id="carousel-dots"></div>
-      <div class="view-all-wrap fade-up">
-        <button class="btn-outline-dark" onclick="showView('catalog', event)">View Connoisseur Catalog →</button>
-      </div>
-    </section>
 
-    <!-- ── THE MASTER WEAVER'S CHRONICLES (STORYTELLING) ── -->
-    <section class="heritage-chronicles-section" aria-label="Master weavers storytelling">
-      <div class="chronicles-inner reveal">
-        <div class="chronicles-content">
-          <span class="chronicles-eyebrow">✦ The SonAff Authenticity Guarantee ✦</span>
-          <h2 class="chronicles-title">Direct from the Loom to Your Heirloom Wardrobe</h2>
-          <p class="chronicles-text">In an era of power-loom imitations and synthetic zari, SonAff Sarees stands as a bastion of pure Indian artistry. We bypass middlemen to work directly with multi-generational weaving families in Varanasi, Kanchipuram, and Chanderi.</p>
-          <div class="chronicles-badges">
-            <div class="c-badge">
-              <strong>100% Handloom Certified</strong>
-              <span>Every weave is individually numbered and verified by our textile masters.</span>
-            </div>
-            <div class="c-badge">
-              <strong>Electro-Plated Fine Zari</strong>
-              <span>Tested metallic luster designed to preserve its brilliance across generations.</span>
-            </div>
-          </div>
-          <button class="btn-primary" onclick="showView('about', event)" style="margin-top:2rem;">Read Our Heritage Manifesto</button>
-        </div>
-        <div class="chronicles-visual">
-          <div class="chronicles-frame">
-            <img src="assets/images/hero_saree_closeup.png" alt="Master artisan handloom weaving" class="chronicles-img" loading="lazy" />
-            <div class="chronicles-seal">
-              <span>✦ CERTIFIED PURE SILK ✦</span>
-            </div>
-          </div>
-        </div>
+      <!-- Dots -->
+      <div class="carousel-dots" id="carousel-dots"></div>
+
+      <div class="view-all-wrap fade-up">
+        <button class="btn-outline-dark" onclick="showView('catalog', event)">View Full Catalog →</button>
       </div>
     </section>
 
@@ -226,10 +148,51 @@
           &ldquo;We don&rsquo;t sell sarees.<br class="desktop-br" />We carry stories home to you.&rdquo;
         </p>
         <div class="manifesto-rule"></div>
-        <p class="manifesto-sub">From the looms of Varanasi to the doorsteps of Karnataka — every piece we bring is handpicked for its authenticity, craft, and soul.</p>
+        <p class="manifesto-sub">From the looms of Varanasi to the doorsteps of Karnataka  every piece we bring is handpicked for its authenticity, craft, and soul.</p>
         <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-          <button class="btn-dark" onclick="showView('catalog', event)">Explore Catalog</button>
+          <button class="btn-dark" onclick="showView('catalog', event)">Shop Now</button>
           <button class="btn-outline" onclick="showView('about', event)">Our Story</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── REGIONAL CATEGORIES ── -->
+    <section class="regions-section" aria-label="Shop by region">
+      <div class="section-header reveal">
+        <div class="section-rule"></div>
+        <h2 class="section-title">By Region</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="regions-grid">
+        <div class="region-card fade-up" onclick="showView('catalog', event)">
+          <div class="region-icon">🏛️</div>
+          <div class="region-name">Varanasi</div>
+          <div class="region-saree">Banarasi Silk</div>
+        </div>
+        <div class="region-card fade-up" onclick="showView('catalog', event)">
+          <div class="region-icon">🌺</div>
+          <div class="region-name">Kanchipuram</div>
+          <div class="region-saree">Kanjivaram Silk</div>
+        </div>
+        <div class="region-card fade-up" onclick="showView('catalog', event)">
+          <div class="region-icon">🌸</div>
+          <div class="region-name">Chanderi</div>
+          <div class="region-saree">Chanderi Silk</div>
+        </div>
+        <div class="region-card fade-up" onclick="showView('catalog', event)">
+          <div class="region-icon">🌿</div>
+          <div class="region-name">Bhagalpur</div>
+          <div class="region-saree">Tussar Handloom</div>
+        </div>
+        <div class="region-card fade-up" onclick="showView('catalog', event)">
+          <div class="region-icon">🦚</div>
+          <div class="region-name">Patan</div>
+          <div class="region-saree">Patola Ikat</div>
+        </div>
+        <div class="region-card fade-up" onclick="showView('catalog', event)">
+          <div class="region-icon">💎</div>
+          <div class="region-name">Pochampally</div>
+          <div class="region-saree">Ikat Silk</div>
         </div>
       </div>
     </section>
@@ -239,7 +202,7 @@
       <div class="footer-inner">
         <div class="footer-left">
           <div class="footer-logo-wrap">
-            <img src="assets/images/logo_white.jpg" alt="SonAff Saree" class="footer-logo-img" loading="lazy" decoding="async" />
+            <img src="images/logo_white.jpg" alt="SonAff Saree" class="footer-logo-img" />
           </div>
           <p class="footer-tagline">Authentic regional heritage sarees<br />crafted to be worn, loved &amp; lived in.</p>
           <nav class="footer-nav" aria-label="Footer links">
@@ -295,93 +258,23 @@
       <p class="page-banner-sub">Authentic regional sarees, handpicked from master weavers across India</p>
     </div>
 
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterProducts('all', this)" id="filter-all">All</button>
+      <button class="filter-btn" onclick="filterProducts('silk', this)" id="filter-silk">Silk</button>
+      <button class="filter-btn" onclick="filterProducts('handloom', this)" id="filter-handloom">Handloom</button>
+      <button class="filter-btn" onclick="filterProducts('ikat', this)" id="filter-ikat">Ikat</button>
+      <button class="filter-btn" onclick="filterProducts('cotton', this)" id="filter-cotton">Cotton</button>
+    </div>
+
     <div class="catalog-container">
-      <!-- Mobile Filter Button (Visible only on tablets/phones) -->
-      <div class="mobile-filter-bar">
-        <button class="btn-mobile-filter" onclick="toggleMobileFilterModal()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
-          Filter &amp; Sort Sarees
-        </button>
-      </div>
-
-      <div class="catalog-layout">
-        <!-- Desktop Sticky Filter Sidebar -->
-        <aside class="catalog-sidebar" aria-label="Catalog filters">
-          <div class="sidebar-header">
-            <h2 class="sidebar-title">Refine By</h2>
-            <button class="btn-reset-filters" onclick="resetAllFilters()">Reset All</button>
-          </div>
-
-          <!-- Category / Weave -->
-          <div class="filter-group">
-            <h3 class="filter-group-title">Weave &amp; Fabric</h3>
-            <div class="filter-options">
-              <button class="filter-pill active" onclick="filterProducts('all', this)" id="filter-all">All Weaves</button>
-              <button class="filter-pill" onclick="filterProducts('silk', this)" id="filter-silk">Pure Silk</button>
-              <button class="filter-pill" onclick="filterProducts('handloom', this)" id="filter-handloom">Handloom</button>
-              <button class="filter-pill" onclick="filterProducts('ikat', this)" id="filter-ikat">Ikat &amp; Patola</button>
-              <button class="filter-pill" onclick="filterProducts('cotton', this)" id="filter-cotton">Cotton Silk</button>
-            </div>
-          </div>
-
-          <!-- Regional Origin -->
-          <div class="filter-group">
-            <h3 class="filter-group-title">Regional Origin</h3>
-            <div class="filter-options">
-              <button class="filter-pill active" onclick="filterByRegion('all', this)" id="reg-all">All Regions</button>
-              <button class="filter-pill" onclick="filterByRegion('Varanasi', this)" id="reg-Varanasi">Varanasi</button>
-              <button class="filter-pill" onclick="filterByRegion('Kanchipuram', this)" id="reg-Kanchipuram">Kanchipuram</button>
-              <button class="filter-pill" onclick="filterByRegion('Chanderi', this)" id="reg-Chanderi">Chanderi</button>
-              <button class="filter-pill" onclick="filterByRegion('Bhagalpur', this)" id="reg-Bhagalpur">Bhagalpur</button>
-              <button class="filter-pill" onclick="filterByRegion('Patan', this)" id="reg-Patan">Patan</button>
-              <button class="filter-pill" onclick="filterByRegion('Pochampally', this)" id="reg-Pochampally">Pochampally</button>
-            </div>
-          </div>
-
-          <!-- Color Swatches -->
-          <div class="filter-group">
-            <h3 class="filter-group-title">Color Palette</h3>
-            <div class="color-swatches-grid">
-              <button class="color-swatch active" style="background:#2C2A27; color:#fff;" onclick="filterByColor('all', this)" title="All Colors">All</button>
-              <button class="color-swatch" style="background:#a6192e;" onclick="filterByColor('red', this)" title="Royal Red / Crimson"></button>
-              <button class="color-swatch" style="background:#D78C2F;" onclick="filterByColor('gold', this)" title="Temple Gold / Mustard"></button>
-              <button class="color-swatch" style="background:#1E824C;" onclick="filterByColor('green', this)" title="Emerald Green"></button>
-              <button class="color-swatch" style="background:#0a2e5c;" onclick="filterByColor('blue', this)" title="Deep Indigo / Teal"></button>
-              <button class="color-swatch" style="background:#e8dfd1; border:1px solid #c8bfae;" onclick="filterByColor('pastel', this)" title="Pastel / Ivory"></button>
-              <button class="color-swatch" style="background:#c67d53;" onclick="filterByColor('terracotta', this)" title="Earthy Terracotta"></button>
-            </div>
-          </div>
-
-          <!-- Sort By -->
-          <div class="filter-group">
-            <h3 class="filter-group-title">Sort Collection</h3>
-            <select class="sort-select" id="desktop-sort-select" onchange="sortProducts(this.value)" aria-label="Sort collection">
-              <option value="default">Curated Order</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="rating">Highest Customer Rating</option>
-            </select>
-          </div>
-        </aside>
-
-        <!-- Main Product Display Area -->
-        <div class="catalog-main">
-          <!-- Active Filter & Result Summary -->
-          <div class="catalog-status-bar">
-            <div class="result-count" id="catalog-result-count">Showing 8 Masterpieces</div>
-            <div class="active-filters-wrap" id="active-filters-wrap"></div>
-          </div>
-
-          <div class="products-grid" id="products-grid"></div>
-        </div>
-      </div>
+      <div class="products-grid" id="products-grid"></div>
     </div>
 
     <footer class="site-footer" aria-label="Catalog footer">
       <div class="footer-inner">
         <div class="footer-left">
           <div class="footer-logo-wrap">
-            <img src="assets/images/logo_white.jpg" alt="SonAff Saree" class="footer-logo-img" loading="lazy" decoding="async" />
+            <img src="images/logo_white.jpg" alt="SonAff Saree" class="footer-logo-img" />
           </div>
           <nav class="footer-nav" aria-label="Catalog footer nav">
             <a href="#" class="footer-link" onclick="showView('home', event)">Home</a>
@@ -433,7 +326,7 @@
       <div class="footer-inner">
         <div class="footer-left">
           <div class="footer-logo-wrap">
-            <img src="assets/images/logo_white.jpg" alt="SonAff Saree" class="footer-logo-img" loading="lazy" decoding="async" />
+            <img src="images/logo_white.jpg" alt="SonAff Saree" class="footer-logo-img" />
           </div>
           <nav class="footer-nav" aria-label="Product footer nav">
             <a href="#" class="footer-link" onclick="showView('home', event)">Home</a>
@@ -545,7 +438,7 @@
       <div class="footer-inner">
         <div class="footer-left">
           <div class="footer-logo-wrap">
-            <img src="assets/images/logo_white.jpg" alt="SonAff Saree" class="footer-logo-img" loading="lazy" decoding="async" />
+            <img src="images/logo_white.jpg" alt="SonAff Saree" class="footer-logo-img" />
           </div>
           <nav class="footer-nav" aria-label="Contact footer nav">
             <a href="#" class="footer-link" onclick="showView('home', event)">Home</a>
@@ -612,9 +505,7 @@
             </div>
           </div>
           <div class="about-badge">
-            <span class="about-badge-icon" style="color:var(--gold);">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-            </span>
+            <span class="about-badge-icon">🧵</span>
             <p>Every saree is sourced directly  no middlemen, no compromises on authenticity.</p>
           </div>
         </div>
@@ -631,27 +522,21 @@
         </div>
         <div class="about-process-steps">
           <div class="about-step fade-up">
-            <div class="about-step-icon" style="color:var(--gold);">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-            </div>
+            <div class="about-step-icon">🗺️</div>
             <div class="about-step-num">01</div>
             <h3 class="about-step-title">We Discover</h3>
             <p class="about-step-body">Our team travels to weaving clusters across India, meeting master craftspeople at their looms and understanding the heritage behind every technique.</p>
           </div>
           <div class="about-step-divider"></div>
           <div class="about-step fade-up">
-            <div class="about-step-icon" style="color:var(--gold);">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z"/></svg>
-            </div>
+            <div class="about-step-icon">✨</div>
             <div class="about-step-num">02</div>
             <h3 class="about-step-title">We Curate</h3>
             <p class="about-step-body">Only a fraction of what we see makes the cut. We select pieces that are exceptional in weave quality, design authenticity, and the story they carry.</p>
           </div>
           <div class="about-step-divider"></div>
           <div class="about-step fade-up">
-            <div class="about-step-icon" style="color:var(--gold);">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-            </div>
+            <div class="about-step-icon">🏠</div>
             <div class="about-step-num">03</div>
             <h3 class="about-step-title">We Deliver</h3>
             <p class="about-step-body">From our hands to your wardrobe  we offer personalised service via WhatsApp so you can ask questions, see more details, and shop with confidence.</p>
@@ -670,30 +555,22 @@
         </div>
         <div class="about-quality-grid">
           <div class="about-quality-card fade-up">
-            <div class="about-quality-icon" style="color:var(--gold);">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M8 6h8l2 6-2 10H8L6 12l2-6z"/><path d="M8 12h8"/></svg>
-            </div>
+            <div class="about-quality-icon">🏺</div>
             <h3>Authenticity Guaranteed</h3>
             <p>Every saree we carry is genuine  sourced directly from weavers and verified for authenticity. No power-loom imitations, no shortcuts.</p>
           </div>
           <div class="about-quality-card fade-up">
-            <div class="about-quality-icon" style="color:var(--gold);">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.8-5.9-2.3L2.3 13.8a2 2 0 0 1 2.8-2.8l3 3"/></svg>
-            </div>
+            <div class="about-quality-icon">👐</div>
             <h3>Handpicked, Not Bulk-Bought</h3>
             <p>We don't stock warehouses. Each piece is individually selected by us in person, which means every saree you see is one we genuinely love.</p>
           </div>
           <div class="about-quality-card fade-up">
-            <div class="about-quality-icon" style="color:var(--gold);">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>
-            </div>
+            <div class="about-quality-icon">🤝</div>
             <h3>Direct Weaver Support</h3>
             <p>By sourcing directly from artisan clusters, we ensure weavers receive fair prices for their craft and their traditions continue to thrive.</p>
           </div>
           <div class="about-quality-card fade-up">
-            <div class="about-quality-icon" style="color:var(--gold);">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-            </div>
+            <div class="about-quality-icon">💬</div>
             <h3>Personal Service</h3>
             <p>Have questions before you buy? Message us on WhatsApp. We know every saree in our collection and will help you find the perfect one.</p>
           </div>
@@ -805,7 +682,7 @@
       <div class="footer-inner">
         <div class="footer-left">
           <div class="footer-logo-wrap">
-            <img src="assets/images/logo_white.jpg" alt="SonAff Saree" class="footer-logo-img" />
+            <img src="images/logo_white.jpg" alt="SonAff Saree" class="footer-logo-img" />
           </div>
           <p class="footer-tagline">Curating India's finest sarees,<br />one loom at a time.</p>
           <nav class="footer-nav" aria-label="About footer nav">
@@ -822,131 +699,6 @@
     </footer>
   </main>
 
-  <!-- ======================================
-       PHASE 1: STICKY MOBILE WHATSAPP BAR
-       ====================================== -->
-  <div class="sticky-mobile-bar" id="sticky-mobile-bar">
-    <div class="sticky-bar-info">
-      <img src="" alt="Saree" id="sticky-bar-img" class="sticky-bar-img" />
-      <div>
-        <div class="sticky-bar-title" id="sticky-bar-title">Saree Name</div>
-        <div class="sticky-bar-price" id="sticky-bar-price">₹0</div>
-      </div>
-    </div>
-    <button class="btn-sticky-whatsapp" id="sticky-bar-btn">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
-      </svg>
-      Buy Now
-    </button>
-  </div>
-
-  <!-- ======================================
-       PHASE 2: CATALOG QUICK-VIEW MODAL
-       ====================================== -->
-  <div class="quickview-modal-overlay" id="quickview-modal" onclick="closeQuickView(event)">
-    <div class="quickview-modal-content" onclick="event.stopPropagation()">
-      <button class="quickview-close-btn" onclick="closeQuickView()" aria-label="Close modal">&times;</button>
-      <div id="quickview-body" style="display:contents;"></div>
-    </div>
-  </div>
-
-  <!-- ======================================
-       MOBILE FILTER MODAL SHEET
-       ====================================== -->
-  <div class="filter-modal-overlay" id="mobile-filter-modal" onclick="closeMobileFilterModal(event)">
-    <div class="filter-modal-sheet" onclick="event.stopPropagation()">
-      <div class="filter-modal-header">
-        <h3 class="filter-modal-title">Filter &amp; Sort Sarees</h3>
-        <button class="filter-modal-close" onclick="closeMobileFilterModal()">&times;</button>
-      </div>
-      <div class="filter-modal-body">
-        <div class="filter-group">
-          <h4 class="filter-group-title">Sort By</h4>
-          <select class="sort-select" id="mobile-sort-select" onchange="sortProducts(this.value)">
-            <option value="default">Curated Order</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-            <option value="rating">Highest Customer Rating</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <h4 class="filter-group-title">Weave &amp; Fabric</h4>
-          <div class="filter-options" id="mobile-weave-options">
-            <button class="filter-pill active" onclick="filterProducts('all', this)" id="m-filter-all">All Weaves</button>
-            <button class="filter-pill" onclick="filterProducts('silk', this)" id="m-filter-silk">Pure Silk</button>
-            <button class="filter-pill" onclick="filterProducts('handloom', this)" id="m-filter-handloom">Handloom</button>
-            <button class="filter-pill" onclick="filterProducts('ikat', this)" id="m-filter-ikat">Ikat &amp; Patola</button>
-            <button class="filter-pill" onclick="filterProducts('cotton', this)" id="m-filter-cotton">Cotton Silk</button>
-          </div>
-        </div>
-        <div class="filter-group">
-          <h4 class="filter-group-title">Regional Origin</h4>
-          <div class="filter-options" id="mobile-region-options">
-            <button class="filter-pill active" onclick="filterByRegion('all', this)" id="m-reg-all">All Regions</button>
-            <button class="filter-pill" onclick="filterByRegion('Varanasi', this)" id="m-reg-Varanasi">Varanasi</button>
-            <button class="filter-pill" onclick="filterByRegion('Kanchipuram', this)" id="m-reg-Kanchipuram">Kanchipuram</button>
-            <button class="filter-pill" onclick="filterByRegion('Chanderi', this)" id="m-reg-Chanderi">Chanderi</button>
-            <button class="filter-pill" onclick="filterByRegion('Bhagalpur', this)" id="m-reg-Bhagalpur">Bhagalpur</button>
-            <button class="filter-pill" onclick="filterByRegion('Patan', this)" id="m-reg-Patan">Patan</button>
-            <button class="filter-pill" onclick="filterByRegion('Pochampally', this)" id="m-reg-Pochampally">Pochampally</button>
-          </div>
-        </div>
-        <div class="filter-group">
-          <h4 class="filter-group-title">Color Palette</h4>
-          <div class="color-swatches-grid">
-            <button class="color-swatch active" style="background:#2C2A27; color:#fff;" onclick="filterByColor('all', this)">All</button>
-            <button class="color-swatch" style="background:#a6192e;" onclick="filterByColor('red', this)"></button>
-            <button class="color-swatch" style="background:#D78C2F;" onclick="filterByColor('gold', this)"></button>
-            <button class="color-swatch" style="background:#1E824C;" onclick="filterByColor('green', this)"></button>
-            <button class="color-swatch" style="background:#0a2e5c;" onclick="filterByColor('blue', this)"></button>
-            <button class="color-swatch" style="background:#e8dfd1; border:1px solid #c8bfae;" onclick="filterByColor('pastel', this)"></button>
-            <button class="color-swatch" style="background:#c67d53;" onclick="filterByColor('terracotta', this)"></button>
-          </div>
-        </div>
-      </div>
-      <div class="filter-modal-footer">
-        <button class="btn-reset-filters" onclick="resetAllFilters(); closeMobileFilterModal();">Reset All</button>
-        <button class="btn-primary btn-full" onclick="closeMobileFilterModal()">Apply Filters</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ======================================
-       FLOATING LUXURY WHATSAPP WIDGET
-       ====================================== -->
-  <a href="https://wa.me/919876543210?text=Hello%20SonAff%20Sarees!%20I%20would%20like%20to%20inquire%20about%20your%20handloom%20collection." target="_blank" rel="noopener noreferrer" class="floating-wa-widget" id="floating-wa-widget" aria-label="Chat with a Saree Specialist on WhatsApp">
-    <span class="wa-tooltip">✨ Chat with a Saree Specialist</span>
-    <div class="wa-icon-wrap">
-      <span class="wa-pulse-ring"></span>
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffffff">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
-      </svg>
-    </div>
-  </a>
-
-  <!-- ======================================
-       THUMB-ZONE MOBILE BOTTOM NAV
-       ====================================== -->
-  <nav class="mobile-bottom-nav" aria-label="Mobile thumb navigation">
-    <a href="#" class="mobile-bottom-item active" id="mb-nav-home" onclick="showView('home', event)">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span>Home</span>
-    </a>
-    <a href="#" class="mobile-bottom-item" id="mb-nav-catalog" onclick="showView('catalog', event)">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      <span>Catalog</span>
-    </a>
-    <a href="#" class="mobile-bottom-item" id="mb-nav-wishlist" onclick="showView('catalog', event); filterProducts('wishlist', this)">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      <span>Wishlist</span>
-    </a>
-    <a href="https://wa.me/919876543210?text=Hello%20SonAff%20Sarees!%20I%20need%20help%20choosing%20a%20saree." target="_blank" class="mobile-bottom-item wa-highlight">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
-      </svg>
-    </div>
-  </a>
-
   <!-- Toast -->
   <div class="toast" id="toast" role="alert" aria-live="polite"></div>
   <!-- Mobile overlay -->
@@ -954,6 +706,6 @@
 
   <!-- EmailJS SDK -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <script src="src/js/app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
