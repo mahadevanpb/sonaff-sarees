@@ -1,4 +1,4 @@
-﻿/* ============================================
+/* ============================================
    SONAFF SAREES  App JavaScript v3
    Shopify Storefront API (Headless CMS)
    ============================================ */
@@ -336,7 +336,8 @@ let currentView = 'home';
 let currentFilter = 'all';
 let currentRegion = 'all';
 let currentSort = 'default';
-let wishlist = new Set();
+let wishlist = new Set(JSON.parse(localStorage.getItem('sonaff_wishlist') || '[]'));
+let cart = JSON.parse(localStorage.getItem('sonaff_cart') || '[]');
 let searchOpen = false;
 let mobileMenuOpen = false;
 
@@ -505,16 +506,28 @@ function renderProductCard(product) {
             <span class="product-rating-count">(${product.reviews})</span>
           </div>
         </div>
-        <button
-          class="btn-product-whatsapp"
-          onclick="event.stopPropagation(); buyViaWhatsApp('${safeName}', '${product.price}', ${product.id})"
-          id="wa-btn-${product.id}"
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
-          </svg>
-          Buy via WhatsApp
-        </button>
+        <div style="display:flex; gap:0.4rem; width:100%;">
+          <button
+            class="icon-btn btn-add-cart-card"
+            style="width:38px; height:38px; border-radius:4px; flex-shrink:0; border:1.5px solid var(--gold); color:var(--gold); background:transparent;"
+            onclick="event.stopPropagation(); addToCart(${product.id})"
+            aria-label="Add to cart"
+            title="Add to cart"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          </button>
+          <button
+            class="btn-product-whatsapp"
+            style="flex:1;"
+            onclick="event.stopPropagation(); buyViaWhatsApp('${safeName}', '${product.price}', ${product.id})"
+            id="wa-btn-${product.id}"
+          >
+            <svg width="15" height="16" viewBox="2 12 20 24" fill="currentColor">
+              <path d="M7 18V17C7 14.2386 9.23858 12 12 12C14.7614 12 17 14.2386 17 17V18H19C20.1046 18 21 18.8954 21 20V34C21 35.1046 20.1046 36 19 36H5C3.89543 36 3 35.1046 3 34V20C3 18.8954 3.89543 18 5 18H7ZM9 18H15V17C15 15.3431 13.6569 14 12 14C10.3431 14 9 15.3431 9 17V18ZM5 20V34H19V20H5Z"/>
+            </svg>
+            Buy Now
+          </button>
+        </div>
       </div>
     </article>
   `;
@@ -616,12 +629,18 @@ function openProductDetail(productId) {
           </div>
         </div>
         <div class="detail-actions">
-          <button class="btn-detail-whatsapp" onclick="buyViaWhatsApp('${safeName}', '${product.price}', ${product.id})">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
-            </svg>
-            Buy via WhatsApp — Immediate Response
-          </button>
+          <div style="display:flex; flex-direction:column; gap:0.75rem; width:100%;">
+            <button class="btn-primary" style="width:100%; justify-content:center; padding:0.95rem 2rem; font-size:0.95rem; letter-spacing:0.08em; background:var(--gold); border:2px solid var(--gold); color:#fff; border-radius:6px; cursor:pointer;" onclick="addToCart(${product.id})">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              <span>ADD TO SHOPPING BAG</span>
+            </button>
+            <button class="btn-detail-whatsapp" onclick="buyViaWhatsApp('${safeName}', '${product.price}', ${product.id})">
+              <svg width="22" height="24" viewBox="2 12 20 24" fill="currentColor">
+                <path d="M7 18V17C7 14.2386 9.23858 12 12 12C14.7614 12 17 14.2386 17 17V18H19C20.1046 18 21 18.8954 21 20V34C21 35.1046 20.1046 36 19 36H5C3.89543 36 3 35.1046 3 34V20C3 18.8954 3.89543 18 5 18H7ZM9 18H15V17C15 15.3431 13.6569 14 12 14C10.3431 14 9 15.3431 9 17V18ZM5 20V34H19V20H5Z"/>
+              </svg>
+              <span>BUY VIA WHATSAPP</span>
+            </button>
+          </div>
           <div class="detail-secondary-actions">
             <button class="btn-detail-wishlist ${wished ? 'active' : ''}" onclick="toggleWishlist(${product.id}, this)">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="${wished ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -760,10 +779,19 @@ function openQuickView(productId) {
         <div style="font-size:1.4rem; font-weight:700; color:var(--crimson);">${product.price}</div>
       </div>
       <p style="font-size:0.9rem; color:var(--charcoal-light); line-height:1.6; max-height:150px; overflow-y:auto;">${product.description || 'Authentic Indian handloom heritage weave crafted with pure silk and traditional motifs.'}</p>
-      <div style="display:flex; gap:1rem; margin-top:1rem;">
-        <button class="btn-primary" style="flex:1; justify-content:center;" onclick="closeQuickView(); openProductDetail(${product.id});">View Full Details</button>
-        <button class="btn-product-whatsapp" style="width:50px; justify-content:center;" onclick="buyViaWhatsApp('${safeName}', '${product.price}', ${product.id})" aria-label="WhatsApp">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+      <div style="display:flex; flex-direction:column; gap:0.5rem; margin-top:1rem;">
+        <div style="display:flex; gap:0.5rem;">
+          <button class="btn-primary" style="flex:1; justify-content:center; padding:0.75rem 0.5rem; font-size:0.85rem;" onclick="addToCart(${product.id})">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <span>ADD TO BAG</span>
+          </button>
+          <button class="btn-primary" style="flex:1; justify-content:center; padding:0.75rem 0.5rem; font-size:0.85rem; background:var(--charcoal); border-color:var(--charcoal);" onclick="closeQuickView(); openProductDetail(${product.id});">View Details</button>
+        </div>
+        <button class="btn-detail-whatsapp" style="width:100%; justify-content:center; padding:0.75rem 1rem;" onclick="buyViaWhatsApp('${safeName}', '${product.price}', ${product.id})">
+          <svg width="20" height="22" viewBox="2 12 20 24" fill="currentColor">
+            <path d="M7 18V17C7 14.2386 9.23858 12 12 12C14.7614 12 17 14.2386 17 17V18H19C20.1046 18 21 18.8954 21 20V34C21 35.1046 20.1046 36 19 36H5C3.89543 36 3 35.1046 3 34V20C3 18.8954 3.89543 18 5 18H7ZM9 18H15V17C15 15.3431 13.6569 14 12 14C10.3431 14 9 15.3431 9 17V18ZM5 20V34H19V20H5Z"/>
+          </svg>
+          <span>BUY VIA WHATSAPP</span>
         </button>
       </div>
     </div>
@@ -1015,22 +1043,276 @@ function handleSearch(value) {
 }
 
 // ============================================
-// WISHLIST
+// WISHLIST & CART SYSTEM
 // ============================================
+function saveWishlist() {
+  localStorage.setItem('sonaff_wishlist', JSON.stringify([...wishlist]));
+  updateWishlistBadge();
+}
+
 function toggleWishlist(productId, btn) {
   if (wishlist.has(productId)) {
     wishlist.delete(productId);
-    btn.classList.remove('active');
-    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
-    btn.setAttribute('aria-label', 'Add to wishlist');
+    if (btn) {
+      btn.classList.remove('active');
+      btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
+      btn.setAttribute('aria-label', 'Add to wishlist');
+    }
     showToast('Removed from wishlist');
   } else {
     wishlist.add(productId);
-    btn.classList.add('active');
-    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
-    btn.setAttribute('aria-label', 'Remove from wishlist');
+    if (btn) {
+      btn.classList.add('active');
+      btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
+      btn.setAttribute('aria-label', 'Remove from wishlist');
+    }
     showToast('❤️ Added to wishlist');
   }
+  saveWishlist();
+  if (document.getElementById('wishlist-modal')?.classList.contains('active')) {
+    renderWishlistDrawer();
+  }
+}
+
+function updateWishlistBadge() {
+  const badge = document.getElementById('wishlist-badge');
+  const drawerCount = document.getElementById('wishlist-drawer-count');
+  const size = wishlist.size;
+  if (badge) {
+    badge.textContent = size;
+    if (size > 0) badge.classList.remove('hidden');
+    else badge.classList.add('hidden');
+  }
+  if (drawerCount) drawerCount.textContent = `(${size})`;
+}
+
+function openWishlistModal() {
+  const modal = document.getElementById('wishlist-modal');
+  if (!modal) return;
+  renderWishlistDrawer();
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeWishlistModal(event) {
+  if (event && event.target !== event.currentTarget) return;
+  const modal = document.getElementById('wishlist-modal');
+  if (!modal) return;
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function renderWishlistDrawer() {
+  const body = document.getElementById('wishlist-drawer-body');
+  if (!body) return;
+
+  if (wishlist.size === 0) {
+    body.innerHTML = `
+      <div class="cart-empty-state">
+        <div class="cart-empty-icon">❤️</div>
+        <h4 class="cart-empty-title">Your wishlist is empty</h4>
+        <p>Save your favorite sarees to review or buy them later.</p>
+        <button class="btn-primary" style="margin-top:0.5rem;" onclick="closeWishlistModal(); showView('catalog');">Explore Collection</button>
+      </div>
+    `;
+    updateWishlistBadge();
+    return;
+  }
+
+  let html = '';
+  wishlist.forEach(id => {
+    const p = PRODUCTS.find(prod => prod.id === id);
+    if (!p) return;
+    html += `
+      <div class="cart-item-card">
+        <img src="${p.image}" alt="${p.name}" class="cart-item-img" />
+        <div class="cart-item-info">
+          <div>
+            <span class="cart-item-eyebrow">${p.region}</span>
+            <h4 class="cart-item-title">${p.name}</h4>
+            <div class="cart-item-price">${p.price}</div>
+          </div>
+          <div class="cart-item-actions">
+            <button class="btn-primary" style="padding:0.4rem 0.8rem; font-size:0.75rem;" onclick="addToCart(${p.id}); toggleWishlist(${p.id});">
+              🛍️ Move to Bag
+            </button>
+            <button class="cart-item-remove" onclick="toggleWishlist(${p.id})" aria-label="Remove item" title="Remove item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  body.innerHTML = html;
+  updateWishlistBadge();
+}
+
+function saveCart() {
+  localStorage.setItem('sonaff_cart', JSON.stringify(cart));
+  updateCartBadge();
+}
+
+function updateCartBadge() {
+  const badge = document.getElementById('cart-badge');
+  const drawerCount = document.getElementById('cart-drawer-count');
+  const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+  if (badge) {
+    badge.textContent = totalQty;
+    if (totalQty > 0) badge.classList.remove('hidden');
+    else badge.classList.add('hidden');
+  }
+  if (drawerCount) {
+    drawerCount.textContent = `(${totalQty})`;
+  }
+}
+
+function addToCart(productId) {
+  const p = PRODUCTS.find(prod => prod.id === productId);
+  if (!p) return;
+  const existing = cart.find(item => item.id === productId);
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ id: productId, quantity: 1 });
+  }
+  saveCart();
+  showToast(`🛍️ Added ${p.name} to bag`);
+  renderCartDrawer();
+}
+
+function removeFromCart(productId) {
+  cart = cart.filter(item => item.id !== productId);
+  saveCart();
+  showToast('Removed item from bag');
+  renderCartDrawer();
+}
+
+function updateCartQty(productId, delta) {
+  const existing = cart.find(item => item.id === productId);
+  if (!existing) return;
+  existing.quantity += delta;
+  if (existing.quantity <= 0) {
+    removeFromCart(productId);
+  } else {
+    saveCart();
+    renderCartDrawer();
+  }
+}
+
+function toggleCartModal() {
+  const modal = document.getElementById('cart-modal');
+  if (!modal) return;
+  if (modal.classList.contains('active')) {
+    closeCartModal();
+  } else {
+    openCartModal();
+  }
+}
+
+function openCartModal() {
+  const modal = document.getElementById('cart-modal');
+  if (!modal) return;
+  renderCartDrawer();
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCartModal(event) {
+  if (event && event.target !== event.currentTarget) return;
+  const modal = document.getElementById('cart-modal');
+  if (!modal) return;
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function renderCartDrawer() {
+  const body = document.getElementById('cart-drawer-body');
+  const footer = document.getElementById('cart-drawer-footer');
+  const totalPriceEl = document.getElementById('cart-total-price');
+  if (!body) return;
+
+  if (cart.length === 0) {
+    body.innerHTML = `
+      <div class="cart-empty-state">
+        <div class="cart-empty-icon">🛍️</div>
+        <h4 class="cart-empty-title">Your shopping bag is empty</h4>
+        <p>Explore our living heritage weaves and find your perfect saree.</p>
+        <button class="btn-primary" style="margin-top:0.5rem;" onclick="closeCartModal(); showView('catalog');">Explore Collection</button>
+      </div>
+    `;
+    if (footer) footer.style.display = 'none';
+    updateCartBadge();
+    return;
+  }
+
+  if (footer) footer.style.display = 'block';
+
+  let totalPriceVal = 0;
+  let html = '';
+
+  cart.forEach(item => {
+    const p = PRODUCTS.find(prod => prod.id === item.id);
+    if (!p) return;
+    const numPrice = parseInt(p.price.replace(/[^0-9]/g, ''), 10) || 0;
+    const itemTotal = numPrice * item.quantity;
+    totalPriceVal += itemTotal;
+
+    html += `
+      <div class="cart-item-card">
+        <img src="${p.image}" alt="${p.name}" class="cart-item-img" />
+        <div class="cart-item-info">
+          <div>
+            <span class="cart-item-eyebrow">${p.region}</span>
+            <h4 class="cart-item-title">${p.name}</h4>
+            <div class="cart-item-price">₹${itemTotal.toLocaleString('en-IN')} ${item.quantity > 1 ? `<span style="font-size:0.75rem; color:var(--charcoal-muted); font-weight:400;">(${p.price} ea)</span>` : ''}</div>
+          </div>
+          <div class="cart-item-actions">
+            <div class="cart-qty-controls">
+              <button class="cart-qty-btn" onclick="updateCartQty(${p.id}, -1)" aria-label="Decrease quantity">&minus;</button>
+              <span class="cart-qty-val">${item.quantity}</span>
+              <button class="cart-qty-btn" onclick="updateCartQty(${p.id}, 1)" aria-label="Increase quantity">&plus;</button>
+            </div>
+            <button class="cart-item-remove" onclick="removeFromCart(${p.id})" aria-label="Remove item" title="Remove item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  body.innerHTML = html;
+  if (totalPriceEl) totalPriceEl.textContent = '₹' + totalPriceVal.toLocaleString('en-IN');
+  updateCartBadge();
+}
+
+function checkoutCartViaWhatsApp() {
+  if (cart.length === 0) {
+    showToast('⚠️ Your shopping bag is empty!');
+    return;
+  }
+  let totalItems = 0;
+  let totalPriceVal = 0;
+  let itemsText = '';
+
+  cart.forEach((item, idx) => {
+    const p = PRODUCTS.find(prod => prod.id === item.id);
+    if (!p) return;
+    totalItems += item.quantity;
+    const numPrice = parseInt(p.price.replace(/[^0-9]/g, ''), 10) || 0;
+    const itemTotal = numPrice * item.quantity;
+    totalPriceVal += itemTotal;
+
+    itemsText += `${idx + 1}. *${p.name}*\n   • Region/Type: ${p.region} | ${p.type}\n   • Qty: ${item.quantity}\n   • Unit Price: ${p.price}\n   • Subtotal: ₹${itemTotal.toLocaleString('en-IN')}\n\n`;
+  });
+
+  const formattedTotal = '₹' + totalPriceVal.toLocaleString('en-IN');
+  const message = `*Hello SonAff Saree!* I would like to order the following handloom sarees from my Shopping Bag:\n\n${itemsText}----------------------------------\n*Total Items:* ${totalItems}\n*Estimated Order Total:* ${formattedTotal}\n----------------------------------\n\nPlease confirm availability and share payment/shipping instructions. Thank you!`;
+
+  const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+  showToast('Opening WhatsApp Checkout…');
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 // ============================================
@@ -1183,6 +1465,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   startCarouselAutoPlay();
   initCarouselSwipe();
   updateFilterButtonCounts(); // dim buttons with no products
+  updateCartBadge();
+  updateWishlistBadge();
 
   // 4. Pause carousel autoplay on hover
   const carouselWrapper = document.querySelector('.carousel-wrapper');
@@ -1195,14 +1479,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   window.addEventListener('scroll', handleHeaderScroll, { passive: true });
   setTimeout(initIntersectionObserver, 200);
 
-  console.log('%c✦ SonAff Saree ✦', 'font-family:serif;font-size:18px;color:#C9A227;font-weight:bold;');
+  console.log('%c✦ SonAff Saree ✦', 'font-family:serif;font-size:18px;color:#D78C2F;font-weight:bold;');
   // Detect whether we fell back to demo data (Shopify products always have a shopifyGid)
   const isLiveData = PRODUCTS.length > 0 && PRODUCTS[0].shopifyGid !== null;
   console.log(
     `%c${isLiveData
       ? `✓ ${PRODUCTS.length} products loaded from Shopify`
       : '⚠ Demo data active  check Shopify credentials in app.js'}`,
-    `font-family:sans-serif;font-size:12px;color:${isLiveData ? '#2E7D32' : '#C0392B'};`
+    `font-family:sans-serif;font-size:12px;color:${isLiveData ? '#2E7D32' : '#A6192E'};`
   );
   // Print each product's assigned category so you can verify
   logCategoryBreakdown(PRODUCTS);
