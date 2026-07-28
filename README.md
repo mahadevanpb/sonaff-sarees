@@ -98,26 +98,6 @@ The website is a **Single Page Application (SPA)** — meaning all three pages (
 - **Toast Notifications** — Small slide-up messages confirm actions (e.g., "Added to wishlist").
 - **Skeleton Loaders** — While products are being fetched from Shopify, placeholder cards are shown so the page never looks empty.
 
----
-
-## 5. Shopify Integration
-
-### Configuration
-
-The Shopify connection is configured at the top of `app.js` (lines 14–15):
-
-```js
-const SHOPIFY_DOMAIN   = 'dacfkb-0r.myshopify.com';
-const STOREFRONT_TOKEN = '99253b45465195716e0d9ae1ad39887f';
-```
-
-The website automatically connects to:
-```
-https://dacfkb-0r.myshopify.com/api/2026-04/graphql.json
-```
-
-> **Do not share the Storefront Token publicly** if you make this repository public. It grants read-only access to your product catalogue.
-
 ### Required Shopify Permissions
 
 In **Shopify Admin → Settings → Apps and sales channels → Develop apps → Storefront API**, ensure these permissions are enabled:
