@@ -23,20 +23,19 @@
   <header id="site-header" class="site-header">
     <div class="header-inner">
 
-      <!-- Left Nav -->
-      <nav class="nav-left" aria-label="Primary navigation">
-        <a href="#" class="nav-link active" id="nav-home" onclick="showView('home', event)">Home</a>
-        <a href="#" class="nav-link" id="nav-catalog" onclick="showView('catalog', event)">Catalog</a>
-        <a href="#" class="nav-link" id="nav-about" onclick="showView('about', event)">About</a>
-        <a href="#" class="nav-link" id="nav-contact" onclick="showView('contact', event)">Contact</a>
-      </nav>
-
-      <!-- Centre Logo -->
-      <div class="logo-center">
+      <!-- Left Logo -->
+      <div class="logo-left">
         <a href="#" onclick="showView('home', event)" class="logo-link" aria-label="SonAff Saree Home">
-          <img src="images/logo_white.jpg" alt="SonAff Saree Logo" class="logo-img" decoding="async" />
+          <img src="images/logo_new.png" alt="SonAff Saree Logo" class="logo-img" decoding="async" />
         </a>
       </div>
+
+      <!-- Center Nav Links (Desktop) -->
+      <nav class="nav-center" aria-label="Primary navigation">
+        <a href="#" class="nav-link active" id="nav-home" onclick="showView('home', event)">Home</a>
+        <a href="#" class="nav-link" id="nav-catalog" onclick="showView('catalog', event)">Catalog</a>
+        <a href="#" class="nav-link" id="nav-contact" onclick="showView('contact', event)">Contact</a>
+      </nav>
 
       <!-- Right: Search, Wishlist, Cart -->
       <div class="nav-right">
@@ -57,7 +56,7 @@
           </svg>
           <span class="cart-badge hidden" id="cart-badge">0</span>
         </button>
-        <!-- Mobile Hamburger  animated to X -->
+        <!-- Mobile Hamburger -->
         <button class="icon-btn mobile-menu-btn" aria-label="Menu" id="btn-mobile-menu" onclick="toggleMobileMenu()">
           <span class="hamburger-icon">
             <span class="hamburger-bar"></span>
@@ -78,6 +77,7 @@
 
     <!-- Mobile Menu  Fullscreen frosted overlay -->
     <div class="mobile-menu" id="mobile-menu">
+      <button class="mobile-menu-close" onclick="toggleMobileMenu()" aria-label="Close menu">✕</button>
       <a href="#" class="mobile-nav-link" onclick="showView('home', event)">Home</a>
       <a href="#" class="mobile-nav-link" onclick="showView('catalog', event)">Catalog</a>
       <a href="#" class="mobile-nav-link" onclick="showView('about', event)">About</a>
@@ -97,17 +97,25 @@
         <div class="hero-text">
           <span class="hero-eyebrow">The Living Heritage Collection</span>
           <h1 class="hero-headline">Where Tradition<br /><em>Meets Grace</em></h1>
+          <h1 class="hero-mobile-title">LIVING HERITAGE</h1>
           <p class="hero-sub">Handwoven across India's most celebrated looms  crafted to be worn, loved &amp; lived in.</p>
           <div class="hero-cta-row desktop-cta">
             <button class="btn-light" onclick="scrollToProducts()">Explore Collection</button>
             <button class="btn-ghost" onclick="showView('catalog', event)">View All Sarees</button>
           </div>
+          <button class="hero-mobile-btn" onclick="showView('catalog')">EXPLORE COLLECTION</button>
         </div>
         <!-- Scroll indicator  animated line (from portfolio) -->
         <div class="scroll-indicator" onclick="scrollToProducts()" aria-label="Scroll down">
           <div class="scroll-indicator-line"></div>
         </div>
       </div>
+    </section>
+
+    <!-- Sabyasachi Style Quote Block (Mobile Only) -->
+    <section class="mobile-quote-block">
+      <p>“Living heritage weaves crafted with pure silk and traditional motifs.”</p>
+      <span class="mobile-quote-divider">— ✦ —</span>
     </section>
 
     <!-- Mobile-only CTA Section -->
@@ -180,55 +188,43 @@
       </div>
       <div class="regions-grid">
         <div class="region-card fade-up" onclick="showView('catalog', event)">
-          <div class="region-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 22h20M4 22V9l8-6 8 6v13M8 22v-8h8v8M10 9h4M12 3v2"/>
-            </svg>
+          <div class="region-thumb">
+            <img src="images/product_banarasi.png" alt="Banarasi Silk Saree" class="region-thumb-img" loading="lazy" />
           </div>
           <div class="region-name">Varanasi</div>
           <div class="region-saree">Banarasi Silk</div>
         </div>
         <div class="region-card fade-up" onclick="showView('catalog', event)">
-          <div class="region-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/><path d="M12 22v-2"/>
-            </svg>
+          <div class="region-thumb">
+            <img src="images/product_kanjivaram.png" alt="Kanjivaram Silk Saree" class="region-thumb-img" loading="lazy" />
           </div>
           <div class="region-name">Kanchipuram</div>
           <div class="region-saree">Kanjivaram Silk</div>
         </div>
         <div class="region-card fade-up" onclick="showView('catalog', event)">
-          <div class="region-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07L19.07 4.93"/><circle cx="12" cy="12" r="3"/>
-            </svg>
+          <div class="region-thumb">
+            <img src="images/product_chanderi.png" alt="Chanderi Silk Saree" class="region-thumb-img" loading="lazy" />
           </div>
           <div class="region-name">Chanderi</div>
           <div class="region-saree">Chanderi Silk</div>
         </div>
         <div class="region-card fade-up" onclick="showView('catalog', event)">
-          <div class="region-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/><circle cx="12" cy="12" r="2"/>
-            </svg>
+          <div class="region-thumb">
+            <img src="images/product_tussar.png" alt="Tussar Handloom Saree" class="region-thumb-img" loading="lazy" />
           </div>
           <div class="region-name">Bhagalpur</div>
           <div class="region-saree">Tussar Handloom</div>
         </div>
         <div class="region-card fade-up" onclick="showView('catalog', event)">
-          <div class="region-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="12 2 22 12 12 22 2 12"/><polygon points="12 6 18 12 12 18 6 12"/><circle cx="12" cy="12" r="1.5"/>
-            </svg>
+          <div class="region-thumb">
+            <img src="images/product_patola.png" alt="Patola Ikat Saree" class="region-thumb-img" loading="lazy" />
           </div>
           <div class="region-name">Patan</div>
           <div class="region-saree">Patola Ikat</div>
         </div>
         <div class="region-card fade-up" onclick="showView('catalog', event)">
-          <div class="region-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm0 16h20v2H2z"/>
-            </svg>
+          <div class="region-thumb">
+            <img src="images/product_pochampally.png" alt="Ikat Silk Saree" class="region-thumb-img" loading="lazy" />
           </div>
           <div class="region-name">Pochampally</div>
           <div class="region-saree">Ikat Silk</div>
@@ -733,10 +729,10 @@
     <footer class="site-footer" aria-label="About footer">
       <div class="footer-inner">
         <div class="footer-left">
-          <div class="footer-logo-wrap">
-            <img src="images/logo_white.jpg" alt="SonAff Saree" class="footer-logo-img" />
+          <div class="footer-brand">
+            <img src="images/logo_new.png" alt="SonAff Saree Logo" class="footer-logo-img" loading="lazy" />
+            <p class="footer-brand-desc">Authentic Indian handloom heritage weaves crafted with pure silk, traditional motifs, and unparalleled master craftsmanship.</p>
           </div>
-          <p class="footer-tagline">Curating India's finest sarees,<br />one loom at a time.</p>
           <nav class="footer-nav" aria-label="About footer nav">
             <a href="#" class="footer-link" onclick="showView('home', event)">Home</a>
             <a href="#" class="footer-link" onclick="showView('catalog', event)">Catalog</a>

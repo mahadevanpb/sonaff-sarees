@@ -368,6 +368,7 @@ function showView(viewName, event) {
   if (activeLink) activeLink.classList.add('active');
 
   currentView = viewName;
+  document.body.setAttribute('data-view', viewName);
   if (viewName !== 'product') {
     document.body.classList.remove('viewing-product');
   }
