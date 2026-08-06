@@ -2636,6 +2636,45 @@ body[data-view="home"] {
   object-fit: contain;
 }
 
+/* Product Detail Page Header Override (Light Background View) */
+body[data-view="product"] .site-header,
+body.viewing-product .site-header {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+}
+
+body[data-view="product"] .site-header .nav-center .nav-link,
+body.viewing-product .site-header .nav-center .nav-link {
+  color: var(--charcoal) !important;
+}
+
+body[data-view="product"] .site-header:not(.scrolled) .icon-btn,
+body.viewing-product .site-header:not(.scrolled) .icon-btn,
+body[data-view="product"] .site-header:not(.scrolled) .mobile-menu-btn,
+body.viewing-product .site-header:not(.scrolled) .mobile-menu-btn {
+  background: var(--warm-white) !important;
+  border: 1px solid rgba(215, 140, 47, 0.25) !important;
+  color: var(--charcoal) !important;
+}
+
+body[data-view="product"] .site-header:not(.scrolled) .icon-btn svg,
+body.viewing-product .site-header:not(.scrolled) .icon-btn svg {
+  stroke: var(--charcoal) !important;
+}
+
+body[data-view="product"] .site-header:not(.scrolled) .hamburger-bar,
+body.viewing-product .site-header:not(.scrolled) .hamburger-bar {
+  background: var(--charcoal) !important;
+}
+
+body[data-view="product"] .site-header:not(.scrolled) .logo-img,
+body.viewing-product .site-header:not(.scrolled) .logo-img {
+  content: url('images/logo_new.png') !important;
+  height: 52px !important;
+}
+
 @media (max-width: 768px) {
 
   /* 1. Hide Desktop Nav Center & Desktop Hero Elements on Mobile */
