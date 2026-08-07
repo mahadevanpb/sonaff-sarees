@@ -347,42 +347,69 @@ let carouselItems = [];
 let carouselVisible = 3;
 
 // ============================================
-// VIEW MANAGEMENT
+// VIEW MANAGEMENT & PAGE TRANSITIONS
 // ============================================
+function triggerPageTransition(updateFn) {
+  const bar = document.getElementById('page-transition-bar');
+  if (bar) {
+    bar.classList.remove('active');
+    void bar.offsetWidth;
+    bar.classList.add('active');
+    setTimeout(() => {
+      bar.classList.remove('active');
+    }, 350);
+  }
+
+  if (typeof document.startViewTransition === 'function') {
+    document.startViewTransition(() => {
+      updateFn();
+    });
+  } else {
+    updateFn();
+  }
+}
+
 function showView(viewName, event) {
   if (event) event.preventDefault();
+  if (currentView === viewName && viewName !== 'product') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    closeMobileMenu();
+    return;
+  }
 
-  document.querySelectorAll('.view').forEach(v => {
-    v.classList.remove('active');
-    v.classList.add('hidden');
+  triggerPageTransition(() => {
+    document.querySelectorAll('.view').forEach(v => {
+      v.classList.remove('active');
+      v.classList.add('hidden');
+    });
+
+    const target = document.getElementById(`view-${viewName}`);
+    if (target) {
+      target.classList.remove('hidden');
+      target.classList.add('active');
+    }
+
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    const activeLink = document.getElementById(`nav-${viewName}`);
+    if (activeLink) activeLink.classList.add('active');
+
+    currentView = viewName;
+    document.body.setAttribute('data-view', viewName);
+    if (viewName !== 'product') {
+      document.body.classList.remove('viewing-product');
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    closeMobileMenu();
+    setTimeout(initIntersectionObserver, 120);
+
+    const titles = {
+      home: 'SonAff Saree  Authentic Indian Heritage Sarees',
+      catalog: 'Full Collection  SonAff Saree',
+      about: 'About Us  SonAff Saree',
+      contact: 'Contact Us  SonAff Saree',
+    };
+    document.title = titles[viewName] || titles.home;
   });
-
-  const target = document.getElementById(`view-${viewName}`);
-  if (target) {
-    target.classList.remove('hidden');
-    target.classList.add('active');
-  }
-
-  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-  const activeLink = document.getElementById(`nav-${viewName}`);
-  if (activeLink) activeLink.classList.add('active');
-
-  currentView = viewName;
-  document.body.setAttribute('data-view', viewName);
-  if (viewName !== 'product') {
-    document.body.classList.remove('viewing-product');
-  }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  closeMobileMenu();
-  setTimeout(initIntersectionObserver, 120);
-
-  const titles = {
-    home: 'SonAff Saree  Authentic Indian Heritage Sarees',
-    catalog: 'Full Collection  SonAff Saree',
-    about: 'About Us  SonAff Saree',
-    contact: 'Contact Us  SonAff Saree',
-  };
-  document.title = titles[viewName] || titles.home;
 }
 
 function scrollToProducts() {
@@ -608,26 +635,6 @@ function openProductDetail(productId) {
         </div>
         <div class="detail-desc">
           ${product.description || 'An authentic Indian heritage saree sourced directly from master weavers. Handpicked for exceptional drape, rich texture, and timeless craftsmanship.'}
-        </div>
-        <div class="product-specs-card">
-          <div class="specs-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            SonAff Heritage Assurance
-          </div>
-          <div class="specs-grid">
-            <div class="spec-item">
-              <div class="spec-icon">✨</div>
-              <span>100% Authentic Handpicked Weave</span>
-            </div>
-            <div class="spec-item">
-              <div class="spec-icon">🧵</div>
-              <span>Direct Master Weaver Support</span>
-            </div>
-            <div class="spec-item">
-              <div class="spec-icon">🌿</div>
-              <span>Dry Clean Recommended Care</span>
-            </div>
-          </div>
         </div>
         <div class="detail-actions">
           <div style="display:flex; flex-direction:column; gap:0.75rem; width:100%;">
@@ -1155,27 +1162,27 @@ function saveCart() {
 }
 
 function updateCartBadge() {
-  const badge = document.getElementById('cart-badge');
-  const drawerCount = document.getElementById('cart-drawer-count');
-  const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
-  if (badge) {
+  const badges = document.querySelectorAll('#cart-badge, .cart-badge-count');
+  const drawerCounts = document.querySelectorAll('#cart-drawer-count');
+  const totalQty = cart.reduce((sum, item) => sum + (parseInt(item.quantity, 10) || 0), 0);
+  badges.forEach(badge => {
     badge.textContent = totalQty;
     if (totalQty > 0) badge.classList.remove('hidden');
     else badge.classList.add('hidden');
-  }
-  if (drawerCount) {
+  });
+  drawerCounts.forEach(drawerCount => {
     drawerCount.textContent = `(${totalQty})`;
-  }
+  });
 }
 
 function addToCart(productId) {
-  const p = PRODUCTS.find(prod => prod.id === productId);
+  const p = PRODUCTS.find(prod => String(prod.id) === String(productId));
   if (!p) return;
-  const existing = cart.find(item => item.id === productId);
+  const existing = cart.find(item => String(item.id) === String(productId));
   if (existing) {
     existing.quantity += 1;
   } else {
-    cart.push({ id: productId, quantity: 1 });
+    cart.push({ id: p.id, quantity: 1 });
   }
   saveCart();
   showToast(`🛍️ Added ${p.name} to bag`);
@@ -1183,14 +1190,14 @@ function addToCart(productId) {
 }
 
 function removeFromCart(productId) {
-  cart = cart.filter(item => item.id !== productId);
+  cart = cart.filter(item => String(item.id) !== String(productId));
   saveCart();
   showToast('Removed item from bag');
   renderCartDrawer();
 }
 
 function updateCartQty(productId, delta) {
-  const existing = cart.find(item => item.id === productId);
+  const existing = cart.find(item => String(item.id) === String(productId));
   if (!existing) return;
   existing.quantity += delta;
   if (existing.quantity <= 0) {
@@ -1253,7 +1260,7 @@ function renderCartDrawer() {
   let html = '';
 
   cart.forEach(item => {
-    const p = PRODUCTS.find(prod => prod.id === item.id);
+    const p = PRODUCTS.find(prod => String(prod.id) === String(item.id));
     if (!p) return;
     const numPrice = parseInt(p.price.replace(/[^0-9]/g, ''), 10) || 0;
     const itemTotal = numPrice * item.quantity;
@@ -1270,11 +1277,11 @@ function renderCartDrawer() {
           </div>
           <div class="cart-item-actions">
             <div class="cart-qty-controls">
-              <button class="cart-qty-btn" onclick="updateCartQty(${p.id}, -1)" aria-label="Decrease quantity">&minus;</button>
+              <button class="cart-qty-btn" onclick="updateCartQty('${p.id}', -1)" aria-label="Decrease quantity">&minus;</button>
               <span class="cart-qty-val">${item.quantity}</span>
-              <button class="cart-qty-btn" onclick="updateCartQty(${p.id}, 1)" aria-label="Increase quantity">&plus;</button>
+              <button class="cart-qty-btn" onclick="updateCartQty('${p.id}', 1)" aria-label="Increase quantity">&plus;</button>
             </div>
-            <button class="cart-item-remove" onclick="removeFromCart(${p.id})" aria-label="Remove item" title="Remove item">
+            <button class="cart-item-remove" onclick="removeFromCart('${p.id}')" aria-label="Remove item" title="Remove item">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
             </button>
           </div>
@@ -1298,7 +1305,7 @@ function checkoutCartViaWhatsApp() {
   let itemsText = '';
 
   cart.forEach((item, idx) => {
-    const p = PRODUCTS.find(prod => prod.id === item.id);
+    const p = PRODUCTS.find(prod => String(prod.id) === String(item.id));
     if (!p) return;
     totalItems += item.quantity;
     const numPrice = parseInt(p.price.replace(/[^0-9]/g, ''), 10) || 0;
