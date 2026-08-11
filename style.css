@@ -1012,6 +1012,24 @@ body {
   align-items: center;
   gap: 1.5rem;
   flex-wrap: wrap;
+  max-width: 100%;
+}
+@media (max-width: 768px) {
+  .category-tabs-wrap {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: flex-start !important;
+  }
+  .category-tabs-wrap::-webkit-scrollbar {
+    display: none;
+  }
+  .cat-tab {
+    flex-shrink: 0;
+  }
 }
 .cat-tab {
   font-family: var(--font-mono);

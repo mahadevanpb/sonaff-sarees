@@ -41,8 +41,17 @@ const CONFIG = {
 // needed by the UI.
 // ============================================
 const PRODUCTS_QUERY = `
-  query FetchProducts {
-    products(first: 20) {
+  query FetchProductsAndCollections {
+    collections(first: 50) {
+      edges {
+        node {
+          id
+          title
+          handle
+        }
+      }
+    }
+    products(first: 50) {
       edges {
         node {
           id
@@ -52,6 +61,15 @@ const PRODUCTS_QUERY = `
           productType
           tags
           descriptionHtml
+          collections(first: 10) {
+            edges {
+              node {
+                id
+                title
+                handle
+              }
+            }
+          }
           variants(first: 1) {
             edges {
               node {
@@ -106,9 +124,15 @@ async function fetchShopifyProducts() {
     }
 
     const edges = json?.data?.products?.edges ?? [];
+    const collectionEdges = json?.data?.collections?.edges ?? [];
+    const fetchedCollections = collectionEdges.map(e => e.node);
 
     if (!edges.length) {
       throw new Error('No products returned from Shopify.');
+    }
+
+    if (fetchedCollections.length) {
+      renderCollectionFilterTabs(fetchedCollections);
     }
 
     return mapShopifyProducts(edges);
@@ -140,10 +164,14 @@ function mapShopifyProducts(edges) {
       ? `₹${parseFloat(compareAt).toLocaleString('en-IN')}`
       : null;
 
-    // --- Category (from productType, tags AND title) ---
+    // --- Collections ---
+    const productCollections = node.collections?.edges?.map(e => e.node) ?? [];
+    const collectionHandles = productCollections.map(c => c.handle);
+
+    // --- Category (from productType, tags, title AND collections) ---
     const rawType = (node.productType ?? '').toLowerCase().trim();
     const rawTitle = (node.title ?? '').toLowerCase().trim();
-    const category = normaliseCategoryTag(rawType, tags, rawTitle);
+    const category = normaliseCategoryTag(rawType, tags, rawTitle, productCollections);
 
     // --- Type label (for display) ---
     // Prefer a tag that starts with "type:" e.g. "type:Pure Silk"
@@ -218,21 +246,28 @@ function logCategoryBreakdown(products) {
 // category works even without Shopify metadata.
 // Keys: 'silk' | 'handloom' | 'ikat' | 'cotton'
 // ============================================
-function normaliseCategoryTag(rawType, tags, rawTitle = '') {
-  // Combine every text source into one searchable string
+function normaliseCategoryTag(rawType, tags, rawTitle = '', collections = []) {
+  const collectionNames = collections.map(c => (c.title || c.handle || '').toLowerCase());
   const combined = [
     rawType,
     rawTitle,
     ...tags.map(t => t.toLowerCase()),
+    ...collectionNames
   ].join(' ');
 
-  // Order matters  more specific patterns first
-  if (/ikat|pochampally|patola|double[\s-]?ikat/.test(combined))          return 'ikat';
-  if (/handloom|tussar|gadwal|maheshwari|linen|jamdani|sambalpuri/.test(combined)) return 'handloom';
-  if (/cotton|khadi|mul[\s-]?mul/.test(combined))                          return 'cotton';
-  if (/silk|banarasi|kanjivaram|kanjeevaram|chanderi|mysore|bhagalpuri|uppada/.test(combined)) return 'silk';
+  if (/katti[\s-]?georgette/.test(combined)) return 'katti-georgette';
+  if (/katti[\s-]?crepe/.test(combined)) return 'katti-crepe';
+  if (/ho[\s-]?crepe|handloom[\s-]?crepe/.test(combined)) return 'ho-crepe';
+  if (/mysore[\s-]?crepe/.test(combined)) return 'mysore-crepe';
+  if (/raw[\s-]?mango/.test(combined)) return 'raw-mango';
+  if (/katan/.test(combined)) return 'katan-silk';
+  if (/banarasi/.test(combined)) return 'banarasi-silk';
+  if (/kanjivaram|kanjeevaram/.test(combined)) return 'kanjivaram-silk';
+  if (/chanderi/.test(combined)) return 'chanderi-silk';
+  if (/ikat|patola|pochampally/.test(combined)) return 'ikat-patola';
+  if (/tussar|bhagalpur/.test(combined)) return 'tussar-handloom';
 
-  return 'silk'; // safe default
+  return 'banarasi-silk';
 }
 
 // ============================================
@@ -246,7 +281,7 @@ const DEMO_PRODUCTS = [
     name: 'Banarasi Silk Saree with Gold Zari',
     type: 'Pure Silk', region: 'Varanasi, UP',
     price: '₹28,500', priceOriginal: '₹32,000', priceNumeric: 28500,
-    category: 'silk', image: 'assets/images/product_banarasi.png',
+    category: 'banarasi-silk', image: 'assets/images/product_banarasi.png',
     imageAlt: 'Banarasi Silk Saree', featured: true, rating: 4.9, reviews: 142,
     images: ['assets/images/product_banarasi.png', 'assets/images/hero_saree_model.png', 'assets/images/product_kanjivaram.png'],
     description: 'An heirloom Banarasi pure silk saree featuring intricate Kadwa weave gold zari florals across the body and a regal pallu. Woven by master artisans in Varanasi, this timeless weave embodies opulence and heritage elegance.'
@@ -256,7 +291,7 @@ const DEMO_PRODUCTS = [
     name: 'Kanjivaram Silk Saree Magenta Mustard Border',
     type: 'Pure Silk', region: 'Kanchipuram, TN',
     price: '₹34,000', priceOriginal: '₹38,500', priceNumeric: 34000,
-    category: 'silk', image: 'assets/images/product_kanjivaram.png',
+    category: 'kanjivaram-silk', image: 'assets/images/product_kanjivaram.png',
     imageAlt: 'Kanjivaram Silk Saree', featured: true, rating: 5.0, reviews: 89,
     images: ['assets/images/product_kanjivaram.png', 'assets/images/hero_saree_model.png'],
     description: 'A traditional Kanchipuram pure mulberry silk saree characterized by its distinctive Korvai weave contrasting mustard yellow border against a jewel-toned magenta body. Renowned for its durability and rich luster.'
@@ -266,7 +301,7 @@ const DEMO_PRODUCTS = [
     name: 'Chanderi Silk Saree Pink Lotus Floral Pattern',
     type: 'Silk Cotton', region: 'Chanderi, MP',
     price: '₹14,500', priceOriginal: null, priceNumeric: 14500,
-    category: 'silk', image: 'assets/images/product_chanderi.png',
+    category: 'chanderi-silk', image: 'assets/images/product_chanderi.png',
     imageAlt: 'Chanderi Silk Saree', featured: true, rating: 4.8, reviews: 217,
     images: ['assets/images/product_chanderi.png'],
     description: 'Feather-light Chanderi silk cotton weave originating from Madhya Pradesh, adorned with delicate gold zari lotus motifs (buttis) and a sheer, luxurious drape perfect for celebrations and festive gatherings.'
@@ -276,7 +311,7 @@ const DEMO_PRODUCTS = [
     name: 'Tussar Handloom Saree Natural Ivory Terracotta',
     type: 'Handloom Silk', region: 'Bhagalpur, Bihar',
     price: '₹9,800', priceOriginal: '₹12,000', priceNumeric: 9800,
-    category: 'handloom', image: 'assets/images/product_tussar.png',
+    category: 'tussar-handloom', image: 'assets/images/product_tussar.png',
     imageAlt: 'Tussar Handloom Saree', featured: true, rating: 4.7, reviews: 63,
     images: ['assets/images/product_tussar.png'],
     description: 'Authentic Bhagalpuri Tussar wild silk saree showcasing a natural textured ivory weave complemented by organic terracotta borders and traditional tribal-inspired block prints.'
@@ -286,7 +321,7 @@ const DEMO_PRODUCTS = [
     name: 'Patola Silk Saree Royal Blue Crimson Double Ikat',
     type: 'Double Ikat', region: 'Patan, Gujarat',
     price: '₹55,000', priceOriginal: '₹62,000', priceNumeric: 55000,
-    category: 'ikat', image: 'assets/images/product_patola.png',
+    category: 'ikat-patola', image: 'assets/images/product_patola.png',
     imageAlt: 'Patola Silk Saree', featured: true, rating: 5.0, reviews: 38,
     images: ['assets/images/product_patola.png', 'assets/images/product_pochampally.png'],
     description: 'A masterpiece of precision weaving, this Patan Double Ikat Patola silk saree features intricate geometric jewel-box patterns where both warp and weft threads are resist-dyed prior to weaving.'
@@ -296,7 +331,7 @@ const DEMO_PRODUCTS = [
     name: 'Pochampally Ikat Silk Saree Teal Purple Geometric',
     type: 'Ikat Silk', region: 'Pochampally, Telangana',
     price: '₹18,500', priceOriginal: '₹22,000', priceNumeric: 18500,
-    category: 'ikat', image: 'assets/images/product_pochampally.png',
+    category: 'ikat-patola', image: 'assets/images/product_pochampally.png',
     imageAlt: 'Pochampally Ikat Saree', featured: true, rating: 4.9, reviews: 104,
     images: ['assets/images/product_pochampally.png'],
     description: 'Vibrant Pochampally silk saree crafted in Telangana using traditional single-ikat tie-dye techniques. Features striking geometric diamond patterns in rich teal and royal purple.'
@@ -306,7 +341,7 @@ const DEMO_PRODUCTS = [
     name: 'Maheshwari Cotton Silk Saree Indigo Stripe',
     type: 'Cotton Silk', region: 'Maheshwar, MP',
     price: '₹8,200', priceOriginal: null, priceNumeric: 8200,
-    category: 'cotton',
+    category: 'ho-crepe',
     image: 'https://images.unsplash.com/photo-1594938298603-c8148c4a5792?w=600&h=800&fit=crop&q=80',
     imageAlt: 'Maheshwari Cotton Silk Saree', featured: false, rating: 4.6, reviews: 55,
     images: ['https://images.unsplash.com/photo-1594938298603-c8148c4a5792?w=600&h=800&fit=crop&q=80'],
@@ -317,7 +352,7 @@ const DEMO_PRODUCTS = [
     name: 'Gadwal Silk Cotton Saree Emerald Contrast Border',
     type: 'Silk Cotton', region: 'Gadwal, Telangana',
     price: '₹12,500', priceOriginal: '₹15,000', priceNumeric: 12500,
-    category: 'handloom',
+    category: 'banarasi-silk',
     image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=600&h=800&fit=crop&q=80',
     imageAlt: 'Gadwal Silk Cotton Saree', featured: false, rating: 4.8, reviews: 76,
     images: ['https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=600&h=800&fit=crop&q=80'],
@@ -542,7 +577,7 @@ function renderProductCard(product) {
             aria-label="Add to cart"
             title="Add to cart"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="9" y1="9" x2="15" y2="9"/></svg>
           </button>
           <button
             class="btn-product-whatsapp"
@@ -550,9 +585,6 @@ function renderProductCard(product) {
             onclick="event.stopPropagation(); buyViaWhatsApp('${safeName}', '${product.price}', ${product.id})"
             id="wa-btn-${product.id}"
           >
-            <svg width="15" height="16" viewBox="2 12 20 24" fill="currentColor">
-              <path d="M7 18V17C7 14.2386 9.23858 12 12 12C14.7614 12 17 14.2386 17 17V18H19C20.1046 18 21 18.8954 21 20V34C21 35.1046 20.1046 36 19 36H5C3.89543 36 3 35.1046 3 34V20C3 18.8954 3.89543 18 5 18H7ZM9 18H15V17C15 15.3431 13.6569 14 12 14C10.3431 14 9 15.3431 9 17V18ZM5 20V34H19V20H5Z"/>
-            </svg>
             Buy Now
           </button>
         </div>
@@ -639,13 +671,10 @@ function openProductDetail(productId) {
         <div class="detail-actions">
           <div style="display:flex; flex-direction:column; gap:0.75rem; width:100%;">
             <button class="btn-primary" style="width:100%; justify-content:center; padding:0.95rem 2rem; font-size:0.95rem; letter-spacing:0.08em; background:var(--gold); border:2px solid var(--gold); color:#fff; border-radius:6px; cursor:pointer;" onclick="addToCart(${product.id})">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="9" y1="9" x2="15" y2="9"/></svg>
               <span>ADD TO SHOPPING BAG</span>
             </button>
             <button class="btn-detail-whatsapp" onclick="buyViaWhatsApp('${safeName}', '${product.price}', ${product.id})">
-              <svg width="22" height="24" viewBox="2 12 20 24" fill="currentColor">
-                <path d="M7 18V17C7 14.2386 9.23858 12 12 12C14.7614 12 17 14.2386 17 17V18H19C20.1046 18 21 18.8954 21 20V34C21 35.1046 20.1046 36 19 36H5C3.89543 36 3 35.1046 3 34V20C3 18.8954 3.89543 18 5 18H7ZM9 18H15V17C15 15.3431 13.6569 14 12 14C10.3431 14 9 15.3431 9 17V18ZM5 20V34H19V20H5Z"/>
-              </svg>
               <span>BUY VIA WHATSAPP</span>
             </button>
           </div>
@@ -790,15 +819,12 @@ function openQuickView(productId) {
       <div style="display:flex; flex-direction:column; gap:0.5rem; margin-top:1rem;">
         <div style="display:flex; gap:0.5rem;">
           <button class="btn-primary" style="flex:1; justify-content:center; padding:0.75rem 0.5rem; font-size:0.85rem;" onclick="addToCart(${product.id})">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="9" y1="9" x2="15" y2="9"/></svg>
             <span>ADD TO BAG</span>
           </button>
           <button class="btn-primary" style="flex:1; justify-content:center; padding:0.75rem 0.5rem; font-size:0.85rem; background:var(--charcoal); border-color:var(--charcoal);" onclick="closeQuickView(); openProductDetail(${product.id});">View Details</button>
         </div>
         <button class="btn-detail-whatsapp" style="width:100%; justify-content:center; padding:0.75rem 1rem;" onclick="buyViaWhatsApp('${safeName}', '${product.price}', ${product.id})">
-          <svg width="20" height="22" viewBox="2 12 20 24" fill="currentColor">
-            <path d="M7 18V17C7 14.2386 9.23858 12 12 12C14.7614 12 17 14.2386 17 17V18H19C20.1046 18 21 18.8954 21 20V34C21 35.1046 20.1046 36 19 36H5C3.89543 36 3 35.1046 3 34V20C3 18.8954 3.89543 18 5 18H7ZM9 18H15V17C15 15.3431 13.6569 14 12 14C10.3431 14 9 15.3431 9 17V18ZM5 20V34H19V20H5Z"/>
-          </svg>
           <span>BUY VIA WHATSAPP</span>
         </button>
       </div>
@@ -935,7 +961,12 @@ function renderCatalogProducts(filter = currentFilter) {
 
   let filtered = filter === 'all'
     ? PRODUCTS.slice()
-    : PRODUCTS.filter(p => p.category === filter);
+    : PRODUCTS.filter(p => {
+        if (p.category === filter) return true;
+        const normalizedFilter = filter.replace(/-/g, ' ').toLowerCase();
+        const combined = `${p.name} ${p.type} ${p.region} ${p.category}`.toLowerCase();
+        return combined.includes(normalizedFilter);
+      });
 
   if (currentRegion !== 'all') {
     filtered = filtered.filter(p => (p.region || '').toLowerCase().includes(currentRegion.toLowerCase()));
@@ -995,15 +1026,59 @@ function sortProducts(sortVal) {
 
 // Dim filter buttons that have zero matching products so the
 // user can see at a glance which categories have inventory.
-function updateFilterButtonCounts() {
-  const categories = ['silk', 'handloom', 'ikat', 'cotton'];
-  categories.forEach(cat => {
-    const btn = document.getElementById(`filter-${cat}`);
+function renderCollectionFilterTabs(fetchedCollections = []) {
+  const container = document.getElementById('category-tabs-wrap');
+  if (!container) return;
+
+  const defaultTabs = [
+    { id: 'all', label: 'All Sarees' },
+    { id: 'banarasi-silk', label: 'Banarasi Silk' },
+    { id: 'katan-silk', label: 'Katan Silk' },
+    { id: 'ho-crepe', label: 'HO Crepe' },
+    { id: 'mysore-crepe', label: 'Mysore Crepe' },
+    { id: 'raw-mango', label: 'Raw Mango Silk' },
+    { id: 'katti-crepe', label: 'Katti Crepe' },
+    { id: 'katti-georgette', label: 'Katti Georgette' }
+  ];
+
+  let tabs = [...defaultTabs];
+
+  if (fetchedCollections.length) {
+    fetchedCollections.forEach(col => {
+      const exists = tabs.some(t => t.id === col.handle || t.label.toLowerCase() === col.title.toLowerCase());
+      if (!exists) {
+        tabs.push({ id: col.handle, label: col.title });
+      }
+    });
+  }
+
+  container.innerHTML = tabs.map(t => `
+    <button class="cat-tab ${currentFilter === t.id ? 'active' : ''}" onclick="filterProducts('${t.id}', this)" id="filter-${t.id}">${t.label}</button>
+  `).join('');
+
+  updateFilterButtonCounts(tabs);
+}
+
+function updateFilterButtonCounts(tabsList) {
+  const tabs = tabsList || [
+    { id: 'all', label: 'All Sarees' },
+    { id: 'banarasi-silk', label: 'Banarasi Silk' },
+    { id: 'katan-silk', label: 'Katan Silk' },
+    { id: 'ho-crepe', label: 'HO Crepe' },
+    { id: 'mysore-crepe', label: 'Mysore Crepe' },
+    { id: 'raw-mango', label: 'Raw Mango Silk' },
+    { id: 'katti-crepe', label: 'Katti Crepe' },
+    { id: 'katti-georgette', label: 'Katti Georgette' }
+  ];
+
+  tabs.forEach(cat => {
+    if (cat.id === 'all') return;
+    const btn = document.getElementById(`filter-${cat.id}`);
     if (!btn) return;
-    const count = PRODUCTS.filter(p => p.category === cat).length;
+    const count = PRODUCTS.filter(p => p.category === cat.id || (p.name || '').toLowerCase().includes(cat.id.replace('-', ' '))).length;
     if (count === 0) {
       btn.style.opacity = '0.4';
-      btn.title = `No products in this category yet`;
+      btn.title = `No products in this collection yet`;
     } else {
       btn.style.opacity = '';
       btn.title = `${count} product${count > 1 ? 's' : ''}`;
