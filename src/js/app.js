@@ -1185,9 +1185,23 @@ function closeWishlistModal(event) {
   document.body.style.overflow = '';
 }
 
+function clearWishlist() {
+  if (!wishlist.size) return;
+  wishlist.clear();
+  saveWishlist();
+  showToast('❤️ Saved Wishlist cleared');
+  renderWishlistDrawer();
+}
+
 function renderWishlistDrawer() {
   const body = document.getElementById('wishlist-drawer-body');
+  const clearBtn = document.getElementById('btn-clear-wishlist');
   if (!body) return;
+
+  if (clearBtn) {
+    if (wishlist.size > 0) clearBtn.classList.remove('hidden');
+    else clearBtn.classList.add('hidden');
+  }
 
   if (wishlist.size === 0) {
     body.innerHTML = `
@@ -1216,8 +1230,9 @@ function renderWishlistDrawer() {
             <div class="cart-item-price">${p.price}</div>
           </div>
           <div class="cart-item-actions">
-            <button class="btn-primary" style="padding:0.4rem 0.8rem; font-size:0.75rem;" onclick="addToCart(${p.id}); toggleWishlist(${p.id});">
-              🛍️ Move to Bag
+            <button class="btn-primary" style="padding:0.4rem 0.85rem; font-size:0.75rem; display:inline-flex; align-items:center; gap:0.4rem;" onclick="addToCart(${p.id}); toggleWishlist(${p.id});">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="9" y1="9" x2="15" y2="9"/></svg>
+              <span>MOVE TO BAG</span>
             </button>
             <button class="cart-item-remove" onclick="toggleWishlist(${p.id})" aria-label="Remove item" title="Remove item">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
@@ -1236,10 +1251,26 @@ function saveCart() {
   updateCartBadge();
 }
 
+function syncCartWithProducts() {
+  if (!PRODUCTS || !PRODUCTS.length) return;
+  const initialLen = cart.length;
+  cart = cart.filter(item => PRODUCTS.some(prod => String(prod.id) === String(item.id)));
+  if (cart.length !== initialLen) {
+    saveCart();
+  } else {
+    updateCartBadge();
+  }
+}
+
 function updateCartBadge() {
   const badges = document.querySelectorAll('#cart-badge, .cart-badge-count');
   const drawerCounts = document.querySelectorAll('#cart-drawer-count');
-  const totalQty = cart.reduce((sum, item) => sum + (parseInt(item.quantity, 10) || 0), 0);
+  
+  const validItems = (PRODUCTS && PRODUCTS.length)
+    ? cart.filter(item => PRODUCTS.some(prod => String(prod.id) === String(item.id)))
+    : cart;
+
+  const totalQty = validItems.reduce((sum, item) => sum + (parseInt(item.quantity, 10) || 0), 0);
   badges.forEach(badge => {
     badge.textContent = totalQty;
     if (totalQty > 0) badge.classList.remove('hidden');
@@ -1309,11 +1340,33 @@ function closeCartModal(event) {
   document.body.style.overflow = '';
 }
 
+function clearCart() {
+  if (!cart.length) return;
+  cart = [];
+  saveCart();
+  showToast('🛍️ Shopping bag cleared');
+  renderCartDrawer();
+}
+
 function renderCartDrawer() {
   const body = document.getElementById('cart-drawer-body');
   const footer = document.getElementById('cart-drawer-footer');
   const totalPriceEl = document.getElementById('cart-total-price');
+  const clearBtn = document.getElementById('btn-clear-cart');
   if (!body) return;
+
+  if (PRODUCTS && PRODUCTS.length) {
+    const initialLen = cart.length;
+    cart = cart.filter(item => PRODUCTS.some(prod => String(prod.id) === String(item.id)));
+    if (cart.length !== initialLen) {
+      saveCart();
+    }
+  }
+
+  if (clearBtn) {
+    if (cart.length > 0) clearBtn.classList.remove('hidden');
+    else clearBtn.classList.add('hidden');
+  }
 
   if (cart.length === 0) {
     body.innerHTML = `
@@ -1548,7 +1601,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   startCarouselAutoPlay();
   initCarouselSwipe();
   updateFilterButtonCounts(); // dim buttons with no products
-  updateCartBadge();
+  syncCartWithProducts();
   updateWishlistBadge();
 
   // 4. Pause carousel autoplay on hover

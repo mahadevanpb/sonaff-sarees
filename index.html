@@ -791,7 +791,10 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
           Your Shopping Bag <span id="cart-drawer-count">(0)</span>
         </h3>
-        <button class="quickview-close-btn" onclick="closeCartModal()" aria-label="Close cart">&times;</button>
+        <div class="cart-drawer-actions">
+          <button class="btn-clear-drawer hidden" id="btn-clear-cart" onclick="clearCart()" title="Clear Shopping Bag">Clear Bag</button>
+          <button class="quickview-close-btn" onclick="closeCartModal()" aria-label="Close cart">&times;</button>
+        </div>
       </div>
       <div class="cart-drawer-body" id="cart-drawer-body"></div>
       <div class="cart-drawer-footer" id="cart-drawer-footer">
@@ -820,7 +823,10 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           Saved Wishlist <span id="wishlist-drawer-count">(0)</span>
         </h3>
-        <button class="quickview-close-btn" onclick="closeWishlistModal()" aria-label="Close wishlist">&times;</button>
+        <div class="cart-drawer-actions">
+          <button class="btn-clear-drawer hidden" id="btn-clear-wishlist" onclick="clearWishlist()" title="Clear Wishlist">Clear Wishlist</button>
+          <button class="quickview-close-btn" onclick="closeWishlistModal()" aria-label="Close wishlist">&times;</button>
+        </div>
       </div>
       <div class="cart-drawer-body" id="wishlist-drawer-body"></div>
     </div>

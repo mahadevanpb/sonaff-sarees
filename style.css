@@ -2564,6 +2564,20 @@ body {
   border-bottom: 1px solid var(--border-glass);
   display: flex; align-items: center; justify-content: space-between;
   background: var(--cream);
+  position: relative;
+}
+.cart-drawer-header .quickview-close-btn {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  padding: 0.25rem 0.5rem !important;
+  font-size: 1.6rem !important;
+  line-height: 1 !important;
+}
+.cart-drawer-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
 }
 .cart-drawer-title {
   font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600; color: var(--charcoal);
@@ -2638,6 +2652,30 @@ body {
   border: 2px solid #fff; pointer-events: none;
 }
 .cart-badge.hidden { display: none !important; }
+
+.btn-clear-drawer {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  background: transparent;
+  border: 1px solid rgba(166, 25, 46, 0.3);
+  border-radius: 4px;
+  padding: 0.3rem 0.65rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.btn-clear-drawer:hover {
+  background: var(--crimson);
+  color: #ffffff;
+  border-color: var(--crimson);
+  box-shadow: 0 2px 8px rgba(166, 25, 46, 0.2);
+}
+.btn-clear-drawer.hidden {
+  display: none !important;
+}
 
 /* ============================================
    SABYASACHI MOBILE UI OVERHAUL

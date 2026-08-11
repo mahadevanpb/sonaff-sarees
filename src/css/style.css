@@ -964,21 +964,12 @@ body {
   ), url('images/hero_lifestyle_banner.png') center/cover no-repeat;
 }
 #view-contact .page-banner {
-  background: var(--bg-primary, #FAF8F5) !important;
-  padding: 8.5rem 5% 3.5rem !important;
-  min-height: 240px;
-  border-bottom: 1px solid rgba(215, 140, 47, 0.15);
-}
-#view-contact .page-banner::before {
-  display: none;
-}
-#view-contact .page-banner-title {
-  color: var(--charcoal, #1A1816) !important;
-  text-shadow: none !important;
-}
-#view-contact .page-banner-sub {
-  color: var(--charcoal-muted, #5A544F) !important;
-  text-shadow: none !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 12, 10, 0.72) 0%,
+    rgba(15, 12, 10, 0.35) 40%,
+    rgba(15, 12, 10, 0.82) 100%
+  ), url('images/hero_lifestyle_banner_v3.png') center/cover no-repeat;
 }
 .page-banner::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
@@ -2573,6 +2564,20 @@ body {
   border-bottom: 1px solid var(--border-glass);
   display: flex; align-items: center; justify-content: space-between;
   background: var(--cream);
+  position: relative;
+}
+.cart-drawer-header .quickview-close-btn {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  padding: 0.25rem 0.5rem !important;
+  font-size: 1.6rem !important;
+  line-height: 1 !important;
+}
+.cart-drawer-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
 }
 .cart-drawer-title {
   font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600; color: var(--charcoal);
@@ -2648,6 +2653,30 @@ body {
 }
 .cart-badge.hidden { display: none !important; }
 
+.btn-clear-drawer {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  background: transparent;
+  border: 1px solid rgba(166, 25, 46, 0.3);
+  border-radius: 4px;
+  padding: 0.3rem 0.65rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.btn-clear-drawer:hover {
+  background: var(--crimson);
+  color: #ffffff;
+  border-color: var(--crimson);
+  box-shadow: 0 2px 8px rgba(166, 25, 46, 0.2);
+}
+.btn-clear-drawer.hidden {
+  display: none !important;
+}
+
 /* ============================================
    SABYASACHI MOBILE UI OVERHAUL
    ============================================ */
@@ -2717,9 +2746,8 @@ body[data-view="home"] {
   object-fit: contain;
 }
 
-/* Product & Contact Page Header Overrides (Light Background Views) */
+/* Product Detail Page Header Override (Light Background View) */
 body[data-view="product"] .site-header,
-body[data-view="contact"] .site-header,
 body.viewing-product .site-header {
   background: rgba(255, 255, 255, 0.95) !important;
   backdrop-filter: blur(12px) !important;
@@ -2728,16 +2756,13 @@ body.viewing-product .site-header {
 }
 
 body[data-view="product"] .site-header .nav-center .nav-link,
-body[data-view="contact"] .site-header .nav-center .nav-link,
 body.viewing-product .site-header .nav-center .nav-link {
   color: var(--charcoal) !important;
 }
 
 body[data-view="product"] .site-header:not(.scrolled) .icon-btn,
-body[data-view="contact"] .site-header:not(.scrolled) .icon-btn,
-body[data-view="product"] .site-header:not(.scrolled) .mobile-menu-btn,
-body[data-view="contact"] .site-header:not(.scrolled) .mobile-menu-btn,
 body.viewing-product .site-header:not(.scrolled) .icon-btn,
+body[data-view="product"] .site-header:not(.scrolled) .mobile-menu-btn,
 body.viewing-product .site-header:not(.scrolled) .mobile-menu-btn {
   background: var(--warm-white) !important;
   border: 1px solid rgba(215, 140, 47, 0.25) !important;
@@ -2745,19 +2770,16 @@ body.viewing-product .site-header:not(.scrolled) .mobile-menu-btn {
 }
 
 body[data-view="product"] .site-header:not(.scrolled) .icon-btn svg,
-body[data-view="contact"] .site-header:not(.scrolled) .icon-btn svg,
 body.viewing-product .site-header:not(.scrolled) .icon-btn svg {
   stroke: var(--charcoal) !important;
 }
 
 body[data-view="product"] .site-header:not(.scrolled) .hamburger-bar,
-body[data-view="contact"] .site-header:not(.scrolled) .hamburger-bar,
 body.viewing-product .site-header:not(.scrolled) .hamburger-bar {
   background: var(--charcoal) !important;
 }
 
 body[data-view="product"] .site-header:not(.scrolled) .logo-img,
-body[data-view="contact"] .site-header:not(.scrolled) .logo-img,
 body.viewing-product .site-header:not(.scrolled) .logo-img {
   content: url('images/logo_new.png') !important;
   height: 52px !important;
