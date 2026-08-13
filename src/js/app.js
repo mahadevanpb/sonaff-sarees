@@ -848,108 +848,231 @@ function getCarouselVisible() {
   return 3;
 }
 
-function buildCarousel() {
-  const track = document.getElementById('carousel-track');
-  const dotsContainer = document.getElementById('carousel-dots');
-  if (!track || !dotsContainer) return;
+// ============================================
+// ACCORDION GALLERY SHOWCASE (REACT BITS)
+// ============================================
+let accordionActiveIndex = 2;
 
-  // Use products tagged "featured" in Shopify.
-  // If none are tagged, fall back to the first 6 products so the carousel
-  // is never empty (common when first connecting a Shopify store).
-  carouselItems = PRODUCTS.filter(p => p.featured);
-  if (!carouselItems.length) {
-    carouselItems = PRODUCTS.slice(0, 6);
+function buildAccordionGallery() {
+  const container = document.getElementById('accordion-gallery-root');
+  if (!container) return;
+
+  // Filter 5-6 featured products
+  let items = PRODUCTS.filter(p => p.featured);
+  if (!items.length || items.length < 5) {
+    items = PRODUCTS.slice(0, 5);
+  } else {
+    items = items.slice(0, 6);
   }
 
-  carouselVisible = getCarouselVisible();
-  carouselIndex = 0;
+  const count = items.length;
+  accordionActiveIndex = Math.min(2, count - 1);
 
-  track.innerHTML = carouselItems.map(renderProductCard).join('');
+  // Render HTML
+  let html = `<div class="accordion-gallery" id="accordion-gallery" role="list" aria-label="Featured Sarees Accordion Gallery">`;
+  items.forEach((p, i) => {
+    const isActive = i === accordionActiveIndex;
+    html += `
+      <div
+        class="ag-panel ${isActive ? 'ag-panel--active' : ''}"
+        data-index="${i}"
+        data-id="${p.id}"
+        role="listitem"
+        tabindex="0"
+        aria-current="${isActive ? 'true' : 'false'}"
+        aria-label="${p.name}"
+      >
+        <span class="ag-panel__frame">
+          <span class="ag-panel__media">
+            <img src="${p.image}" alt="${p.name}" draggable="false" />
+          </span>
+          <span class="ag-panel__overlay" aria-hidden="true"></span>
+        </span>
+        <span class="ag-panel__label" aria-hidden="true">
+          <span class="ag-panel__bar"></span>
+          <div class="ag-panel__content">
+            <span class="ag-panel__eyebrow">${p.region}</span>
+            <span class="ag-panel__text">${p.name}</span>
+            <span class="ag-panel__price">
+              ${p.price}
+              <span class="ag-panel__cta">EXPLORE →</span>
+            </span>
+          </div>
+        </span>
+      </div>
+    `;
+  });
+  html += `</div>`;
+  container.innerHTML = html;
 
-  const totalPages = Math.ceil(carouselItems.length / carouselVisible);
-  dotsContainer.innerHTML = '';
-  for (let i = 0; i < totalPages; i++) {
-    const dot = document.createElement('button');
-    dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
-    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-    dot.onclick = () => goToSlide(i * carouselVisible);
-    dotsContainer.appendChild(dot);
-  }
-
-  updateCarouselPosition();
+  // Attach interactive listeners and GSAP timeline layout
+  initAccordionGalleryEvents(items);
 }
 
-function slideCarousel(dir) {
-  carouselVisible = getCarouselVisible();
-  const max = Math.max(0, carouselItems.length - carouselVisible);
-  carouselIndex = Math.max(0, Math.min(carouselIndex + dir, max));
-  updateCarouselPosition();
-}
+function initAccordionGalleryEvents(items) {
+  const galleryEl = document.getElementById('accordion-gallery');
+  if (!galleryEl) return;
 
-function goToSlide(index) {
-  carouselVisible = getCarouselVisible();
-  const max = Math.max(0, carouselItems.length - carouselVisible);
-  carouselIndex = Math.max(0, Math.min(index, max));
-  updateCarouselPosition();
-}
+  const panels = galleryEl.querySelectorAll('.ag-panel');
+  const count = panels.length;
+  const expandRatio = 0.52;
+  const duration = 0.55;
+  const ease = 'power3.out';
+  const tilt = 6;
+  const stagger = 0.05;
 
-function updateCarouselPosition() {
-  const track = document.getElementById('carousel-track');
-  const dotsContainer = document.getElementById('carousel-dots');
-  const prevBtn = document.getElementById('carousel-prev');
-  const nextBtn = document.getElementById('carousel-next');
-  if (!track) return;
+  let currentTl = null;
+  let wasMobile = window.innerWidth <= 768;
 
-  const cards = track.querySelectorAll('.product-card');
-  if (!cards.length) return;
+  const updateLayout = (activeIndex, animate = true) => {
+    const isMobile = window.innerWidth <= 768;
+    const r = Math.min(Math.max(expandRatio, 0.2), 0.9);
+    const grow = count > 1 ? (r * (count - 1)) / (1 - r) : 1;
+    const dur = animate ? duration : 0;
 
-  const viewport = document.getElementById('carousel-viewport');
-  const gap = 24;
-  const viewW = viewport ? viewport.offsetWidth : 0;
-  const cardW = (viewW - gap * (carouselVisible - 1)) / carouselVisible;
-  const offset = carouselIndex * (cardW + gap);
+    if (typeof gsap === 'undefined') return;
 
-  track.style.transform = `translateX(-${offset}px)`;
-  cards.forEach(c => { c.style.flex = `0 0 ${cardW}px`; });
+    // Clear inline GSAP props when switching between mobile and desktop
+    if (wasMobile !== isMobile) {
+      panels.forEach(panel => {
+        const media = panel.querySelector('.ag-panel__media');
+        const elements = panel.querySelectorAll('.ag-panel__bar, .ag-panel__eyebrow, .ag-panel__text, .ag-panel__price');
+        gsap.set([panel, media, ...elements], { clearProps: 'all' });
+      });
+      wasMobile = isMobile;
+    }
 
-  const max = Math.max(0, carouselItems.length - carouselVisible);
-  if (prevBtn) prevBtn.disabled = carouselIndex === 0;
-  if (nextBtn) nextBtn.disabled = carouselIndex >= max;
+    if (currentTl) currentTl.kill();
+    currentTl = gsap.timeline();
 
-  const currentPage = Math.floor(carouselIndex / carouselVisible);
-  if (dotsContainer) {
-    dotsContainer.querySelectorAll('.carousel-dot').forEach((dot, i) => {
-      dot.classList.toggle('active', i === currentPage);
+    panels.forEach((panel, i) => {
+      const isActive = i === activeIndex;
+      const media = panel.querySelector('.ag-panel__media');
+      const bar = panel.querySelector('.ag-panel__bar');
+      const eyebrow = panel.querySelector('.ag-panel__eyebrow');
+      const text = panel.querySelector('.ag-panel__text');
+      const price = panel.querySelector('.ag-panel__price');
+
+      panel.classList.toggle('ag-panel--active', isActive);
+      panel.setAttribute('aria-current', isActive ? 'true' : 'false');
+
+      if (!isMobile) {
+        const rot = isActive ? 0 : (i < activeIndex ? tilt : -tilt);
+        currentTl.to(panel, { flexGrow: isActive ? grow : 1, rotateY: rot, height: '100%', duration: dur, ease }, 0);
+
+        if (media) {
+          const drift = Math.max(-1.5, Math.min(1.5, activeIndex - i));
+          const shiftX = isActive ? 0 : drift * 12;
+          const gray = isActive ? 0 : 1;
+          currentTl.to(
+            media,
+            {
+              top: '-5%',
+              left: '-10%',
+              width: '120%',
+              height: '110%',
+              xPercent: 0,
+              yPercent: 0,
+              scale: isActive ? 1.05 : 1.0,
+              x: shiftX,
+              '--ag-gray': gray,
+              '--ag-dim': isActive ? 0 : 0.4,
+              duration: dur,
+              ease
+            },
+            0
+          );
+        }
+
+        if (bar && text) {
+          if (isActive) {
+            currentTl.to([bar, eyebrow, text, price], { opacity: 1, x: 0, duration: dur, ease, stagger }, 0);
+          } else {
+            currentTl.to([bar, eyebrow, text, price], { opacity: 0, x: -14, duration: dur * 0.6, ease }, 0);
+          }
+        }
+      } else {
+        // Mobile Vertical Accordion
+        const targetHeight = isActive ? 300 : 84;
+        currentTl.to(panel, { height: targetHeight, duration: dur, ease }, 0);
+
+        if (media) {
+          currentTl.to(
+            media,
+            {
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              xPercent: 0,
+              yPercent: 0,
+              x: 0,
+              scale: isActive ? 1.05 : 1.0,
+              '--ag-gray': isActive ? 0 : 0.5,
+              '--ag-dim': isActive ? 0.15 : 0.45,
+              duration: dur,
+              ease
+            },
+            0
+          );
+        }
+
+        if (bar && text) {
+          currentTl.to([bar, eyebrow, text], { opacity: 1, x: 0, duration: dur, ease }, 0);
+          if (price) {
+            currentTl.to(price, { opacity: isActive ? 1 : 0, y: isActive ? 0 : 6, duration: dur, ease }, 0);
+          }
+        }
+      }
     });
-  }
-}
+  };
 
-let carouselTimer;
-function startCarouselAutoPlay() {
-  clearInterval(carouselTimer);
-  carouselTimer = setInterval(() => {
-    carouselVisible = getCarouselVisible();
-    const max = Math.max(0, carouselItems.length - carouselVisible);
-    carouselIndex = carouselIndex >= max ? 0 : carouselIndex + 1;
-    updateCarouselPosition();
-  }, 4500);
-}
+  // Initial layout calculation
+  updateLayout(accordionActiveIndex, false);
 
-function stopCarouselAutoPlay() { clearInterval(carouselTimer); }
+  // Panel hover & click handling
+  panels.forEach((panel, i) => {
+    panel.addEventListener('mouseenter', () => {
+      if (window.innerWidth > 768) {
+        accordionActiveIndex = i;
+        updateLayout(i, true);
+      }
+    });
 
-function initCarouselSwipe() {
-  const viewport = document.getElementById('carousel-viewport');
-  if (!viewport) return;
-  let startX = 0;
-  viewport.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-    stopCarouselAutoPlay();
-  }, { passive: true });
-  viewport.addEventListener('touchend', e => {
-    const diff = startX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) slideCarousel(diff > 0 ? 1 : -1);
-    startCarouselAutoPlay();
-  }, { passive: true });
+    panel.addEventListener('click', (e) => {
+      const pId = panel.getAttribute('data-id');
+      if (accordionActiveIndex === i) {
+        if (pId) openProductDetail(pId);
+      } else {
+        accordionActiveIndex = i;
+        updateLayout(i, true);
+      }
+    });
+
+    panel.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const pId = panel.getAttribute('data-id');
+        if (pId) openProductDetail(pId);
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        const next = (i + 1) % count;
+        accordionActiveIndex = next;
+        panels[next].focus();
+        updateLayout(next, true);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prev = (i - 1 + count) % count;
+        accordionActiveIndex = prev;
+        panels[prev].focus();
+        updateLayout(prev, true);
+      }
+    });
+  });
+
+  window.addEventListener('resize', () => {
+    updateLayout(accordionActiveIndex, false);
+  });
 }
 
 // ============================================
@@ -1000,7 +1123,43 @@ function renderCatalogProducts(filter = currentFilter) {
   }
 
   grid.innerHTML = filtered.map(renderProductCard).join('');
+  initCard3DTilt();
+  if (typeof gsap !== 'undefined') {
+    gsap.fromTo(
+      grid.querySelectorAll('.product-card'),
+      { opacity: 0, y: 16 },
+      { opacity: 1, y: 0, duration: 0.4, stagger: 0.04, ease: 'power3.out' }
+    );
+  }
   setTimeout(initIntersectionObserver, 80);
+}
+
+function initCard3DTilt() {
+  const cards = document.querySelectorAll('.product-card');
+  const isMobile = window.innerWidth <= 768;
+  if (isMobile) return;
+
+  cards.forEach(card => {
+    if (card.dataset.tiltInitialized) return;
+    card.dataset.tiltInitialized = 'true';
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * -3.5;
+      const rotateY = ((x - centerX) / centerX) * 3.5;
+
+      card.style.transform = `perspective(1000px) translateY(-6px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
 }
 
 function filterProducts(category, btn) {
@@ -1243,6 +1402,13 @@ function renderWishlistDrawer() {
     `;
   });
   body.innerHTML = html;
+  if (typeof gsap !== 'undefined') {
+    gsap.fromTo(
+      body.querySelectorAll('.cart-item-card'),
+      { opacity: 0, x: 20 },
+      { opacity: 1, x: 0, duration: 0.35, stagger: 0.05, ease: 'power3.out' }
+    );
+  }
   updateWishlistBadge();
 }
 
@@ -1419,6 +1585,13 @@ function renderCartDrawer() {
   });
 
   body.innerHTML = html;
+  if (typeof gsap !== 'undefined') {
+    gsap.fromTo(
+      body.querySelectorAll('.cart-item-card'),
+      { opacity: 0, x: 20 },
+      { opacity: 1, x: 0, duration: 0.35, stagger: 0.05, ease: 'power3.out' }
+    );
+  }
   if (totalPriceEl) totalPriceEl.textContent = '₹' + totalPriceVal.toLocaleString('en-IN');
   updateCartBadge();
 }
@@ -1597,19 +1770,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // 3. Boot all product-dependent UI
   renderCatalogProducts('all');
-  buildCarousel();
-  startCarouselAutoPlay();
-  initCarouselSwipe();
+  buildAccordionGallery();
   updateFilterButtonCounts(); // dim buttons with no products
   syncCartWithProducts();
   updateWishlistBadge();
-
-  // 4. Pause carousel autoplay on hover
-  const carouselWrapper = document.querySelector('.carousel-wrapper');
-  if (carouselWrapper) {
-    carouselWrapper.addEventListener('mouseenter', stopCarouselAutoPlay);
-    carouselWrapper.addEventListener('mouseleave', startCarouselAutoPlay);
-  }
 
   // 5. Global scroll + animation listeners
   window.addEventListener('scroll', handleHeaderScroll, { passive: true });

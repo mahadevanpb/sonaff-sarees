@@ -14,6 +14,7 @@
   <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 <body>
   <!-- Top Gold Page Transition Ribbon -->
@@ -126,41 +127,19 @@
       <button class="btn-outline-dark" onclick="showView('catalog', event)">View All Sarees</button>
     </div>
 
-    <!-- ── FEATURED PRODUCTS CAROUSEL ── -->
-    <section class="featured-section" id="featured-products" aria-label="Featured products carousel">
+    <!-- ── FEATURED PRODUCTS ACCORDION GALLERY ── -->
+    <section class="featured-section" id="featured-products" aria-label="Featured products gallery">
       <div class="section-header reveal">
         <div class="section-rule"></div>
         <h2 class="section-title">Featured Pieces</h2>
         <div class="section-rule"></div>
       </div>
 
-      <div class="carousel-wrapper">
-        <!-- Prev Button -->
-        <button class="carousel-arrow carousel-prev" id="carousel-prev" onclick="slideCarousel(-1)" aria-label="Previous product">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"/>
-          </svg>
-        </button>
-
-        <!-- Track -->
-        <div class="carousel-viewport" id="carousel-viewport">
-          <div class="carousel-track" id="carousel-track">
-            <!-- Populated by JS -->
-          </div>
-        </div>
-
-        <!-- Next Button -->
-        <button class="carousel-arrow carousel-next" id="carousel-next" onclick="slideCarousel(1)" aria-label="Next product">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"/>
-          </svg>
-        </button>
+      <div class="accordion-gallery-wrapper">
+        <div id="accordion-gallery-root" class="accordion-gallery-root"></div>
       </div>
 
-      <!-- Dots -->
-      <div class="carousel-dots" id="carousel-dots"></div>
-
-      <div class="view-all-wrap fade-up">
+      <div class="view-all-wrap fade-up" style="margin-top: 2.5rem;">
         <button class="btn-outline-dark" onclick="showView('catalog', event)">View Full Catalog →</button>
       </div>
     </section>
