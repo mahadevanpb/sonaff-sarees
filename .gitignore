@@ -1,8 +1,25 @@
 # ===========================
-# Local Backup (do not commit)
+# Local Backups & Archives
 # ===========================
-_archive/Sonaff Sarees Backup*/
-backup_pre_revamp/
+backup-*/
+backup_*/
+_archive/
+shopify-covert/
+assets/
+*.zip
+
+# ===========================
+# Python Utility Scripts & Caches
+# ===========================
+*.py
+__pycache__/
+*.pyc
+
+# ===========================
+# Temporary Data Exports & Imports
+# ===========================
+*.csv
+demo_products_output.js
 
 # ===========================
 # OS & System Files
@@ -44,15 +61,11 @@ Desktop.ini
 *.key
 
 # ===========================
-# Build Output (if added later)
+# Build Output & Dependencies
 # ===========================
 dist/
 build/
 out/
-
-# ===========================
-# Node (if added later)
-# ===========================
 node_modules/
 npm-debug.log*
 yarn-debug.log*

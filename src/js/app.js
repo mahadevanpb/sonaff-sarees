@@ -281,9 +281,9 @@ const DEMO_PRODUCTS = [
     name: 'Banarasi Silk Saree with Gold Zari',
     type: 'Pure Silk', region: 'Varanasi, UP',
     price: '₹28,500', priceOriginal: '₹32,000', priceNumeric: 28500,
-    category: 'banarasi-silk', image: 'assets/images/product_banarasi.png',
+    category: 'banarasi-silk', image: 'images/product_banarasi.png',
     imageAlt: 'Banarasi Silk Saree', featured: true, rating: 4.9, reviews: 142,
-    images: ['assets/images/product_banarasi.png', 'assets/images/hero_saree_model.png', 'assets/images/product_kanjivaram.png'],
+    images: ['images/product_banarasi.png', 'images/hero_saree_model.png', 'images/product_kanjivaram.png'],
     description: 'An heirloom Banarasi pure silk saree featuring intricate Kadwa weave gold zari florals across the body and a regal pallu. Woven by master artisans in Varanasi, this timeless weave embodies opulence and heritage elegance.'
   },
   {
@@ -291,9 +291,9 @@ const DEMO_PRODUCTS = [
     name: 'Kanjivaram Silk Saree Magenta Mustard Border',
     type: 'Pure Silk', region: 'Kanchipuram, TN',
     price: '₹34,000', priceOriginal: '₹38,500', priceNumeric: 34000,
-    category: 'kanjivaram-silk', image: 'assets/images/product_kanjivaram.png',
+    category: 'kanjivaram-silk', image: 'images/product_kanjivaram.png',
     imageAlt: 'Kanjivaram Silk Saree', featured: true, rating: 5.0, reviews: 89,
-    images: ['assets/images/product_kanjivaram.png', 'assets/images/hero_saree_model.png'],
+    images: ['images/product_kanjivaram.png', 'images/hero_saree_model.png'],
     description: 'A traditional Kanchipuram pure mulberry silk saree characterized by its distinctive Korvai weave contrasting mustard yellow border against a jewel-toned magenta body. Renowned for its durability and rich luster.'
   },
   {
@@ -301,9 +301,9 @@ const DEMO_PRODUCTS = [
     name: 'Chanderi Silk Saree Pink Lotus Floral Pattern',
     type: 'Silk Cotton', region: 'Chanderi, MP',
     price: '₹14,500', priceOriginal: null, priceNumeric: 14500,
-    category: 'chanderi-silk', image: 'assets/images/product_chanderi.png',
+    category: 'chanderi-silk', image: 'images/product_chanderi.png',
     imageAlt: 'Chanderi Silk Saree', featured: true, rating: 4.8, reviews: 217,
-    images: ['assets/images/product_chanderi.png'],
+    images: ['images/product_chanderi.png'],
     description: 'Feather-light Chanderi silk cotton weave originating from Madhya Pradesh, adorned with delicate gold zari lotus motifs (buttis) and a sheer, luxurious drape perfect for celebrations and festive gatherings.'
   },
   {
@@ -311,9 +311,9 @@ const DEMO_PRODUCTS = [
     name: 'Tussar Handloom Saree Natural Ivory Terracotta',
     type: 'Handloom Silk', region: 'Bhagalpur, Bihar',
     price: '₹9,800', priceOriginal: '₹12,000', priceNumeric: 9800,
-    category: 'tussar-handloom', image: 'assets/images/product_tussar.png',
+    category: 'tussar-handloom', image: 'images/product_tussar.png',
     imageAlt: 'Tussar Handloom Saree', featured: true, rating: 4.7, reviews: 63,
-    images: ['assets/images/product_tussar.png'],
+    images: ['images/product_tussar.png'],
     description: 'Authentic Bhagalpuri Tussar wild silk saree showcasing a natural textured ivory weave complemented by organic terracotta borders and traditional tribal-inspired block prints.'
   },
   {
@@ -321,9 +321,9 @@ const DEMO_PRODUCTS = [
     name: 'Patola Silk Saree Royal Blue Crimson Double Ikat',
     type: 'Double Ikat', region: 'Patan, Gujarat',
     price: '₹55,000', priceOriginal: '₹62,000', priceNumeric: 55000,
-    category: 'ikat-patola', image: 'assets/images/product_patola.png',
+    category: 'ikat-patola', image: 'images/product_patola.png',
     imageAlt: 'Patola Silk Saree', featured: true, rating: 5.0, reviews: 38,
-    images: ['assets/images/product_patola.png', 'assets/images/product_pochampally.png'],
+    images: ['images/product_patola.png', 'images/product_pochampally.png'],
     description: 'A masterpiece of precision weaving, this Patan Double Ikat Patola silk saree features intricate geometric jewel-box patterns where both warp and weft threads are resist-dyed prior to weaving.'
   },
   {
@@ -331,9 +331,9 @@ const DEMO_PRODUCTS = [
     name: 'Pochampally Ikat Silk Saree Teal Purple Geometric',
     type: 'Ikat Silk', region: 'Pochampally, Telangana',
     price: '₹18,500', priceOriginal: '₹22,000', priceNumeric: 18500,
-    category: 'ikat-patola', image: 'assets/images/product_pochampally.png',
+    category: 'ikat-patola', image: 'images/product_pochampally.png',
     imageAlt: 'Pochampally Ikat Saree', featured: true, rating: 4.9, reviews: 104,
-    images: ['assets/images/product_pochampally.png'],
+    images: ['images/product_pochampally.png'],
     description: 'Vibrant Pochampally silk saree crafted in Telangana using traditional single-ikat tie-dye techniques. Features striking geometric diamond patterns in rich teal and royal purple.'
   },
   {
@@ -597,7 +597,7 @@ function renderProductCard(product) {
 // PRODUCT DETAIL PAGE
 // ============================================
 function openProductDetail(productId) {
-  const product = PRODUCTS.find(p => p.id === productId);
+  const product = PRODUCTS.find(p => p.id == productId || String(p.id) === String(productId));
   if (!product) return;
 
   const contentEl = document.getElementById('product-detail-content');
@@ -665,13 +665,10 @@ function openProductDetail(productId) {
           <span class="detail-current-price">${product.price}</span>
           ${product.priceOriginal ? `<span class="detail-orig-price">${product.priceOriginal}</span> <span class="detail-discount-tag">Limited Offer</span>` : ''}
         </div>
-        <div class="detail-desc">
-          ${product.description || 'An authentic Indian heritage saree sourced directly from master weavers. Handpicked for exceptional drape, rich texture, and timeless craftsmanship.'}
-        </div>
         <div class="detail-actions">
           <div style="display:flex; flex-direction:column; gap:0.75rem; width:100%;">
-            <button class="btn-primary" style="width:100%; justify-content:center; padding:0.95rem 2rem; font-size:0.95rem; letter-spacing:0.08em; background:var(--gold); border:2px solid var(--gold); color:#fff; border-radius:6px; cursor:pointer;" onclick="addToCart(${product.id})">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="9" y1="9" x2="15" y2="9"/></svg>
+            <button class="btn-primary" style="width:100%; justify-content:center; align-items:center; gap:0.65rem; padding:0.95rem 2rem; font-size:0.95rem; letter-spacing:0.08em; background:var(--gold); border:2px solid var(--gold); color:#fff; border-radius:6px; cursor:pointer;" onclick="addToCart(${product.id})">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="9" y1="9" x2="15" y2="9"/></svg>
               <span>ADD TO SHOPPING BAG</span>
             </button>
             <button class="btn-detail-whatsapp" onclick="buyViaWhatsApp('${safeName}', '${product.price}', ${product.id})">
@@ -688,6 +685,9 @@ function openProductDetail(productId) {
               Share Saree
             </button>
           </div>
+        </div>
+        <div class="detail-desc">
+          ${product.description || 'An authentic Indian heritage saree sourced directly from master weavers. Handpicked for exceptional drape, rich texture, and timeless craftsmanship.'}
         </div>
       </div>
     `;
@@ -891,10 +891,9 @@ function buildAccordionGallery() {
         <span class="ag-panel__label" aria-hidden="true">
           <span class="ag-panel__bar"></span>
           <div class="ag-panel__content">
-            <span class="ag-panel__eyebrow">${p.region}</span>
             <span class="ag-panel__text">${p.name}</span>
             <span class="ag-panel__price">
-              ${p.price}
+              <span class="ag-price-val">${p.price}</span>
               <span class="ag-panel__cta">EXPLORE →</span>
             </span>
           </div>
@@ -984,16 +983,18 @@ function initAccordionGalleryEvents(items) {
           );
         }
 
-        if (bar && text) {
-          if (isActive) {
-            currentTl.to([bar, eyebrow, text, price], { opacity: 1, x: 0, duration: dur, ease, stagger }, 0);
-          } else {
-            currentTl.to([bar, eyebrow, text, price], { opacity: 0, x: -14, duration: dur * 0.6, ease }, 0);
+        if (bar && text && price) {
+          const cta = panel.querySelector('.ag-panel__cta');
+          currentTl.to(bar, { opacity: isActive ? 1 : 0.6, duration: dur, ease }, 0);
+          currentTl.to(text, { opacity: isActive ? 1 : 0.85, x: 0, duration: dur, ease }, 0);
+          currentTl.to(price, { opacity: 1, x: 0, duration: dur, ease }, 0);
+          if (cta) {
+            currentTl.to(cta, { opacity: isActive ? 1 : 0, x: isActive ? 0 : -8, duration: dur, ease }, 0);
           }
         }
       } else {
         // Mobile Vertical Accordion
-        const targetHeight = isActive ? 300 : 84;
+        const targetHeight = isActive ? 280 : 84;
         currentTl.to(panel, { height: targetHeight, duration: dur, ease }, 0);
 
         if (media) {
@@ -1008,8 +1009,8 @@ function initAccordionGalleryEvents(items) {
               yPercent: 0,
               x: 0,
               scale: isActive ? 1.05 : 1.0,
-              '--ag-gray': isActive ? 0 : 0.5,
-              '--ag-dim': isActive ? 0.15 : 0.45,
+              '--ag-gray': isActive ? 0 : 0.3,
+              '--ag-dim': isActive ? 0.15 : 0.4,
               duration: dur,
               ease
             },
@@ -1017,10 +1018,13 @@ function initAccordionGalleryEvents(items) {
           );
         }
 
-        if (bar && text) {
-          currentTl.to([bar, eyebrow, text], { opacity: 1, x: 0, duration: dur, ease }, 0);
-          if (price) {
-            currentTl.to(price, { opacity: isActive ? 1 : 0, y: isActive ? 0 : 6, duration: dur, ease }, 0);
+        if (bar && text && price) {
+          const cta = panel.querySelector('.ag-panel__cta');
+          currentTl.to(bar, { opacity: isActive ? 1 : 0.6, duration: dur, ease }, 0);
+          currentTl.to(text, { opacity: 1, x: 0, duration: dur, ease }, 0);
+          currentTl.to(price, { opacity: 1, y: 0, duration: dur, ease }, 0);
+          if (cta) {
+            currentTl.to(cta, { opacity: isActive ? 1 : 0, duration: dur, ease }, 0);
           }
         }
       }
@@ -1040,9 +1044,10 @@ function initAccordionGalleryEvents(items) {
     });
 
     panel.addEventListener('click', (e) => {
-      const pId = panel.getAttribute('data-id');
-      if (accordionActiveIndex === i) {
-        if (pId) openProductDetail(pId);
+      const rawId = panel.getAttribute('data-id');
+      const pId = isNaN(rawId) ? rawId : Number(rawId);
+      if (accordionActiveIndex === i || e.target.closest('.ag-panel__cta')) {
+        if (pId !== null && pId !== undefined) openProductDetail(pId);
       } else {
         accordionActiveIndex = i;
         updateLayout(i, true);
@@ -1050,10 +1055,11 @@ function initAccordionGalleryEvents(items) {
     });
 
     panel.addEventListener('keydown', (e) => {
+      const rawId = panel.getAttribute('data-id');
+      const pId = isNaN(rawId) ? rawId : Number(rawId);
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        const pId = panel.getAttribute('data-id');
-        if (pId) openProductDetail(pId);
+        if (pId !== null && pId !== undefined) openProductDetail(pId);
       } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
         e.preventDefault();
         const next = (i + 1) % count;
